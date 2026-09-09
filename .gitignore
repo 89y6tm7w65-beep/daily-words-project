@@ -1,0 +1,4 @@
+node_modules/
+_shots/
+.DS_Store
+daily-words-data/

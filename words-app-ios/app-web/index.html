@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#33466E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="每日单词">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>每日英语单词 · App</title>
+<style>
+  :root{
+    --bg:#F6F5F0; --card:#FFFFFF; --ink:#1A1B1C; --sub:#6B7280;
+    --line:#E4E3DD; --accent:#33466E; --accent-soft:#EAF0FA; --accent-ink:#2A3A5C;
+    --warn:#8A6D3B; --ok:#3E7C4F; --ok-soft:#E6F2E9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'PingFang SC','Microsoft YaHei','Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; padding-bottom:56px;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 14px;}
+
+  /* ===== Splash ===== */
+  #splash{position:fixed; inset:0; z-index:100; background:linear-gradient(160deg,#33466E 0%,#1E2B47 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity .5s;}
+  #splash.hide{opacity:0; pointer-events:none;}
+  #splash .logo{width:104px; height:104px; border-radius:24px; box-shadow:0 12px 40px rgba(0,0,0,.35); animation:pop .6s ease-out both;}
+  #splash .name{color:#fff; font-size:22px; font-weight:700; margin-top:20px; letter-spacing:2px;}
+  #splash .slogan{color:rgba(255,255,255,.7); font-size:12.5px; margin-top:8px;}
+  #splash .foot{position:absolute; bottom:34px; color:rgba(255,255,255,.4); font-size:11px;}
+  @keyframes pop{0%{transform:scale(.7); opacity:0;} 100%{transform:scale(1); opacity:1;}}
+
+  /* ===== Level Picker ===== */
+  #levelView{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px 20px; background:linear-gradient(170deg,#F6F5F0 0%,#EBEEF5 100%);}
+  #levelView .lv-logo{width:72px; height:72px; border-radius:18px; box-shadow:0 8px 24px rgba(51,70,110,.25);}
+  #levelView h2{font-size:20px; font-weight:700; color:var(--accent-ink); margin-top:16px;}
+  #levelView .lv-sub{font-size:13px; color:var(--sub); margin:6px 0 26px; text-align:center;}
+  .lv-card{width:100%; max-width:420px; background:var(--card); border:1.5px solid var(--line); border-radius:16px; padding:18px 20px; margin-bottom:12px; display:flex; align-items:center; gap:16px; cursor:pointer; transition:all .18s;}
+  .lv-card:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:0 6px 18px rgba(51,70,110,.12);}
+  .lv-tag{flex:0 0 74px; text-align:center; font-size:14px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); border-radius:10px; padding:10px 0;}
+  .lv-card:nth-child(2) .lv-tag{background:#E9F3EA; color:#3E7C4F;}
+  .lv-card:nth-child(3) .lv-tag{background:#F8EFE1; color:#8A6D3B;}
+  .lv-info{flex:1; min-width:0;}
+  .lv-info .t{font-size:15px; font-weight:600; color:var(--ink);}
+  .lv-info .d{font-size:12px; color:var(--sub); margin-top:2px;}
+  .lv-info .n{font-size:11.5px; color:var(--accent); margin-top:4px; font-weight:600;}
+
+  /* ===== Header ===== */
+  header.top{background:var(--accent); color:#fff; padding:22px 16px 18px; margin-bottom:14px;}
+  .top-inner{max-width:920px; margin:0 auto; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  .top-inner h1{font-size:20px; font-weight:700;}
+  .top-inner p{font-size:12.5px; opacity:.85; margin-top:3px;}
+  .stats{font-size:12.5px; background:rgba(255,255,255,.14); border-radius:999px; padding:6px 14px;}
+  .lv-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:4px 14px; font-size:12.5px; color:#fff; cursor:pointer; transition:background .15s;}
+  .lv-badge:hover{background:rgba(255,255,255,.26);}
+
+  /* ===== Tabs ===== */
+  nav.tabs{display:flex; gap:6px; margin:14px 0 16px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:5px;}
+  .tab{flex:1; text-align:center; font-size:14px; font-weight:500; color:var(--sub); padding:8px 0; border-radius:9px; cursor:pointer; user-select:none; transition:all .15s;}
+  .tab.active{background:var(--accent); color:#fff;}
+
+  /* ===== Common card ===== */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px 17px; margin-bottom:12px; scroll-margin-top:12px;}
+  .card .word-line{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  .card .word{font-size:19px; font-weight:700; color:var(--accent-ink);}
+  .card .ipa{font-size:13px; color:var(--sub); font-style:italic;}
+  .card .def{font-size:13.5px; margin:3px 0 10px;}
+  .card .def b{color:var(--warn);}
+  .card .ex{font-size:13px; background:#FAF9F5; border-radius:8px; padding:7px 10px; margin-bottom:6px;}
+  .card .ex .zh{color:var(--sub);}
+  .card .tip{margin-top:8px; font-size:12.5px; background:var(--accent-soft); border-radius:8px; padding:8px 10px;}
+  .card .tip b{color:var(--accent-ink);}
+  .card .foot{display:flex; align-items:center; justify-content:space-between; margin-top:10px; gap:8px;}
+  .master-btn{font-size:12.5px; border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:999px; padding:5px 14px; cursor:pointer; transition:all .15s;}
+  .master-btn.on{background:var(--ok-soft); border-color:var(--ok); color:var(--ok); font-weight:600;}
+  .card .date-tag{font-size:11.5px; color:var(--sub); background:var(--bg); border-radius:999px; padding:3px 10px;}
+  .card .lvl-tag{font-size:11px; font-weight:600; border-radius:999px; padding:3px 9px;}
+  .lvl-A1-A2{background:#E9F3EA; color:#3E7C4F;}
+  .lvl-B1-B2{background:var(--accent-soft); color:var(--accent-ink);}
+  .lvl-C1-C2{background:#F8EFE1; color:#8A6D3B;}
+
+  /* ===== Day groups ===== */
+  .day-group{margin-bottom:18px;}
+  .day-head{font-size:14.5px; font-weight:700; color:var(--accent-ink); margin:2px 2px 10px; display:flex; align-items:center; gap:8px;}
+  .day-head .cnt{font-size:11.5px; color:var(--sub); font-weight:400;}
+
+  /* ===== Search ===== */
+  .search{display:flex; gap:8px; margin-bottom:14px;}
+  .search input{flex:1; border:1px solid var(--line); background:var(--card); border-radius:10px; padding:9px 13px; font-size:14px; color:var(--ink); outline:none;}
+  .search input:focus{border-color:var(--accent);}
+  .search .f-count{font-size:12px; color:var(--sub); align-self:center; white-space:nowrap;}
+
+  /* ===== Summary chips ===== */
+  .sum-day{margin-bottom:12px;}
+  .sum-day .lbl{font-size:13px; font-weight:700; color:var(--warn); margin-bottom:6px;}
+  .sum-day a{display:inline-block; font-size:13px; color:var(--accent-ink); background:var(--accent-soft); border-radius:999px; padding:3px 12px; margin:2px 4px 2px 0; text-decoration:none; cursor:pointer; transition:background .15s;}
+  .sum-day a:hover{background:#D8E2F5;}
+  .sum-day a.done{background:var(--ok-soft); color:var(--ok);}
+
+  /* ===== Review ===== */
+  .rev-bar{text-align:center; font-size:13px; color:var(--sub); margin-bottom:12px;}
+  .rev-bar b{color:var(--accent-ink);}
+  .rev-ctrl{display:flex; gap:8px; justify-content:center; margin-bottom:14px; flex-wrap:wrap;}
+  .btn{font-size:13px; border:1px solid var(--line); background:var(--card); color:var(--accent-ink); border-radius:10px; padding:8px 16px; cursor:pointer; transition:all .15s;}
+  .btn:hover{border-color:var(--accent);}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .flip-wrap{perspective:1200px; max-width:560px; margin:0 auto;}
+  .flip{position:relative; width:100%; min-height:300px; transform-style:preserve-3d; transition:transform .45s; cursor:pointer;}
+  .flip.show{transform:rotateY(180deg);}
+  .face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:var(--card); border:1px solid var(--line);}
+  .face.front .w{font-size:30px; font-weight:700; color:var(--accent-ink);}
+  .face.front .p{font-size:14px; color:var(--sub); margin-top:8px;}
+  .face.front .hint{font-size:12px; color:var(--sub); margin-top:22px; opacity:.75;}
+  .face.back{transform:rotateY(180deg); justify-content:flex-start; text-align:left; overflow:auto;}
+  .face.back .bd{font-size:13.5px;}
+  .face.back .bd .ip{color:var(--sub); font-style:italic;}
+  .face.back .bd .df{margin:6px 0 10px; font-weight:600; color:var(--accent-ink);}
+  .face.back .bd .ex{font-size:12.5px; background:#FAF9F5; border-radius:8px; padding:6px 9px; margin-bottom:6px;}
+  .face.back .bd .ex .zh{color:var(--sub);}
+  .face.back .bd .tip{margin-top:6px; font-size:12px; background:var(--accent-soft); border-radius:8px; padding:7px 9px;}
+  .rev-actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
+  .rev-actions .btn{min-width:110px; padding:10px 0;}
+  .btn.no{color:#A34B4B; border-color:#E5C9C9;}
+  .btn.no:hover{background:#FBEFEF;}
+  .btn.yes{color:var(--ok); border-color:#BFDCC7;}
+  .btn.yes:hover{background:var(--ok-soft);}
+  .rev-empty{text-align:center; color:var(--sub); font-size:14px; padding:40px 0;}
+
+  .empty{text-align:center; color:var(--sub); font-size:14px; padding:36px 0;}
+  footer{text-align:center; font-size:11.5px; color:var(--sub); margin-top:22px;}
+
+  @media (max-width:480px){
+    .face.front .w{font-size:25px;}
+    .rev-actions .btn{min-width:0; flex:1;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Splash ===== -->
+<div id="splash">
+  <img class="logo" src="icon-192.png" alt="">
+  <div class="name">每日英语单词</div>
+  <div class="slogan">每天 8:30 五个实用词 · 雅思托福进阶</div>
+  <div class="foot">Daily Words · 你的随身词库</div>
+</div>
+
+<!-- ===== Level Picker ===== -->
+<div id="levelView" style="display:none;"></div>
+
+<!-- ===== Main ===== -->
+<div id="mainView" style="display:none;">
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>每日英语单词</h1>
+      <p>每天 8:30 推送 5 个实用词 · <span id="dataSrc">内置词库</span></p>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <span class="lv-badge" id="lvBadge">C1-C2</span>
+      <span class="stats" id="statsBar">加载中…</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" id="tabs">
+    <div class="tab active" data-tab="today">今日</div>
+    <div class="tab" data-tab="all">全部</div>
+    <div class="tab" data-tab="summary">汇总</div>
+    <div class="tab" data-tab="review">复习</div>
+  </nav>
+
+  <section id="view-today"></section>
+
+  <section id="view-all" style="display:none;">
+    <div class="search">
+      <input id="searchInput" type="text" placeholder="搜索单词或释义…">
+      <span class="f-count" id="searchCount"></span>
+    </div>
+    <div id="allList"></div>
+  </section>
+
+  <section id="view-summary" style="display:none;">
+    <div id="sumList"></div>
+  </section>
+
+  <section id="view-review" style="display:none;">
+    <div class="rev-bar" id="revBar"></div>
+    <div class="rev-ctrl">
+      <button class="btn" id="revMode">范围：全部单词</button>
+      <button class="btn" id="revStart">开始复习</button>
+    </div>
+    <div id="revArea"></div>
+  </section>
+
+  <footer>单词数据由每日推送自动累积 · 学习进度保存在本机浏览器</footer>
+</div>
+</div>
+
+<script>
+// PWA：仅 HTTPS 或 localhost 下注册离线缓存
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+</script>
+
+<script src="words-data.js"></script>
+<script>
+(function(){
+  "use strict";
+  try {
+    var DATA = (typeof WORDS_DATA !== "undefined") ? WORDS_DATA : [];
+    var REMOTE_URL = "https://cdn.jsdelivr.net/gh/89y6tm7w65-beep/daily-words-data@main/words-data.json"; // 远程词库：App 每次启动自动联网更新
+    var dataSource = "内置词库";
+    var KEY = "dailyWordsMastered_v1";
+    var LKEY = "dailyWordsLevel_v1";
+    var store = null;
+    try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ store = {}; }
+    function saveStore(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
+    function isDone(w){ return !!store[w]; }
+    function setDone(w, v){ store[w] = v ? 1 : 0; saveStore(); }
+    function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+    var LEVELS = [
+      {id:"A1-A2", t:"A1-A2", name:"基础 · 日常生存", desc:"生活必备词：购物、通勤、点餐、问路"},
+      {id:"B1-B2", t:"B1-B2", name:"进阶 · 学习与职场", desc:"留学、办公、会议、写作常用表达"},
+      {id:"C1-C2", t:"C1-C2", name:"精通 · 学术与专业", desc:"雅思 7+、学术论文、高级表达"}
+    ];
+    var curLevel = null;
+
+    // 展平所有词
+    var ALL = [];
+    DATA.forEach(function(d){
+      d.words.forEach(function(wd){ wd._date = d.date; wd._label = d.label; ALL.push(wd); });
+    });
+    function byLevel(list){ return curLevel ? list.filter(function(w){ return w.level === curLevel; }) : list; }
+    function levelCount(lv){ return ALL.filter(function(w){ return w.level === lv; }).length; }
+
+    // ===== 远程词库自动更新 =====
+    function normalizeData(obj){
+      if(!obj || !Array.isArray(obj) || !obj.length) return null;
+      if(!obj[0] || !obj[0].date || !Array.isArray(obj[0].words)) return null;
+      return obj;
+    }
+    function loadCached(){
+      try{
+        var s = localStorage.getItem("dwRemoteCache_v1");
+        if(s){ var d = normalizeData(JSON.parse(s)); if(d) return d; }
+      }catch(e){}
+      return null;
+    }
+    function fetchRemote(done){
+      var cached = loadCached();
+      if(cached){ DATA = cached; dataSource = "词库（上次联网缓存）"; }
+      if(!REMOTE_URL){ if(done) done(); return; }
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", REMOTE_URL, true);
+      xhr.timeout = 8000;
+      xhr.onload = function(){
+        try{
+          var d = normalizeData(JSON.parse(xhr.responseText));
+          if(d){
+            DATA = d; dataSource = "词库（已自动更新）";
+            try{ localStorage.setItem("dwRemoteCache_v1", JSON.stringify(d)); }catch(e){}
+          }
+        }catch(e){}
+        if(done) done();
+      };
+      xhr.onerror = function(){ if(done) done(); };
+      xhr.ontimeout = function(){ if(done) done(); };
+      xhr.send();
+    }
+    function refreshAllData(){
+      ALL = [];
+      DATA.forEach(function(d){
+        d.words.forEach(function(wd){ wd._date = d.date; wd._label = d.label; ALL.push(wd); });
+      });
+    }
+
+    // ===== Splash → Level Picker → Main =====
+    function showMain(){
+      document.getElementById('splash').classList.add('hide');
+      document.getElementById('levelView').style.display = 'none';
+      document.getElementById('mainView').style.display = '';
+      document.getElementById('lvBadge').textContent = curLevel;
+      var ds = document.getElementById('dataSrc');
+      if(ds) ds.textContent = dataSource;
+      switchTab('today');
+    }
+    function showLevelPicker(){
+      document.getElementById('splash').classList.add('hide');
+      document.getElementById('mainView').style.display = 'none';
+      var v = document.getElementById('levelView');
+      v.style.display = 'flex';
+      var html = '<img class="lv-logo" src="icon-192.png" alt=""><h2>选择你的单词水平</h2>' +
+        '<div class="lv-sub">不同水平推送不同难度的单词，随时可切换</div>';
+      LEVELS.forEach(function(l){
+        html += '<div class="lv-card" data-lv="' + l.id + '">' +
+          '<div class="lv-tag">' + l.t + '</div>' +
+          '<div class="lv-info"><div class="t">' + l.name + '</div>' +
+          '<div class="d">' + l.desc + '</div>' +
+          '<div class="n">当前词库 ' + levelCount(l.id) + ' 词</div></div></div>';
+      });
+      v.innerHTML = html;
+      v.querySelectorAll('.lv-card').forEach(function(c){
+        c.addEventListener('click', function(){
+          curLevel = c.getAttribute('data-lv');
+          try { localStorage.setItem(LKEY, curLevel); } catch(e){}
+          showMain();
+        });
+      });
+    }
+
+    // ===== 渲染工具 =====
+    function cardHTML(wd){
+      var tip = wd.tip ? '<div class="tip"><b>记忆：</b>' + esc(wd.tip) + '</div>' : '';
+      var exs = (wd.ex || []).map(function(e){
+        return '<div class="ex">' + esc(e[0]) + '<br><span class="zh">' + esc(e[1]) + '</span></div>';
+      }).join('');
+      var done = isDone(wd.w);
+      var lvCls = 'lvl-' + esc(wd.level || 'B1-B2');
+      return '<div class="card" id="w-' + esc(wd.w) + '">' +
+        '<div class="word-line"><span class="word">' + esc(wd.w) + '</span>' +
+        '<span class="ipa">' + esc(wd.ipa || '') + '</span>' +
+        '<span class="lvl-tag ' + lvCls + '">' + esc(wd.level || '') + '</span>' +
+        '<span class="date-tag">' + esc(wd._label || '') + '</span></div>' +
+        '<div class="def"><b>' + esc(wd.pos || '') + '</b> ' + esc(wd.def) + '</div>' + exs + tip +
+        '<div class="foot"><button class="master-btn' + (done ? ' on' : '') + '" data-w="' + esc(wd.w) + '">' +
+        (done ? '已掌握' : '标记掌握') + '</button></div></div>';
+    }
+
+    function renderCardsInto(el, list){
+      if(!list.length){ el.innerHTML = '<div class="empty">当前级别暂无单词，试试切换其他水平</div>'; return; }
+      var html = '';
+      var groups = {};
+      list.forEach(function(wd){ (groups[wd._label] = groups[wd._label] || []).push(wd); });
+      Object.keys(groups).forEach(function(label){
+        var arr = groups[label];
+        var mastered = arr.filter(function(w){ return isDone(w.w); }).length;
+        html += '<div class="day-group"><div class="day-head">' + esc(label) +
+          '<span class="cnt">' + arr.length + ' 词 · 已掌握 ' + mastered + '</span></div>';
+        arr.forEach(function(wd){ html += cardHTML(wd); });
+        html += '</div>';
+      });
+      el.innerHTML = html;
+    }
+
+    // ===== Tab 切换 =====
+    var views = { today:'view-today', all:'view-all', summary:'view-summary', review:'view-review' };
+    function switchTab(tab){
+      document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
+      Object.keys(views).forEach(function(k){
+        document.getElementById(views[k]).style.display = (k === tab) ? '' : 'none';
+      });
+      if(tab === 'today') renderToday();
+      if(tab === 'all') renderAll();
+      if(tab === 'summary') renderSummary();
+      if(tab === 'review') renderReview();
+    }
+    document.getElementById('tabs').addEventListener('click', function(e){
+      var t = e.target.closest('.tab'); if(t) switchTab(t.getAttribute('data-tab'));
+    });
+
+    // ===== 今日 =====
+    var todayIdx = DATA.length - 1;
+    function renderToday(){
+      var wrap = document.getElementById('view-today');
+      if(!DATA.length){ wrap.innerHTML = '<div class="empty">暂无数据</div>'; return; }
+      var d = DATA[todayIdx];
+      var words = byLevel(d.words);
+      if(!words.length){
+        wrap.innerHTML = '<div class="empty">今日推送的 5 个词里没有「' + esc(curLevel) + '」级别的词<br><br>' +
+          '<button class="btn" id="lvSwitch">切换单词水平</button></div>';
+        var ls = document.getElementById('lvSwitch');
+        if(ls) ls.onclick = function(){ showLevelPicker(); };
+        return;
+      }
+      var mastered = words.filter(function(w){ return isDone(w.w); }).length;
+      var html = '<div class="day-group"><div class="day-head">' + esc(d.label) +
+        '<span class="cnt">' + words.length + ' 词 · 已掌握 ' + mastered + '/' + words.length + '</span></div>';
+      words.forEach(function(wd){ html += cardHTML(wd); });
+      html += '</div><div style="display:flex;justify-content:center;gap:8px;">';
+      if(todayIdx > 0) html += '<button class="btn" id="prevDay">← 前一天</button>';
+      if(todayIdx < DATA.length - 1) html += '<button class="btn" id="nextDay">后一天 →</button>';
+      html += '</div>';
+      wrap.innerHTML = html;
+      var prev = document.getElementById('prevDay');
+      var next = document.getElementById('nextDay');
+      if(prev) prev.onclick = function(){ todayIdx--; renderToday(); };
+      if(next) next.onclick = function(){ todayIdx++; renderToday(); };
+    }
+
+    // ===== 全部 + 搜索 =====
+    var searchBox = document.getElementById('searchInput');
+    function renderAll(){
+      var q = searchBox.value.trim().toLowerCase();
+      var list = byLevel(ALL);
+      if(q){
+        list = list.filter(function(wd){
+          return wd.w.toLowerCase().indexOf(q) >= 0 ||
+                 (wd.def || '').toLowerCase().indexOf(q) >= 0 ||
+                 (wd.pos || '').toLowerCase().indexOf(q) >= 0;
+        });
+      }
+      document.getElementById('searchCount').textContent = list.length + ' / ' + byLevel(ALL).length;
+      renderCardsInto(document.getElementById('allList'), list);
+    }
+    searchBox.addEventListener('input', renderAll);
+
+    // ===== 汇总 =====
+    function renderSummary(){
+      var html = '<div class="card" style="background:transparent;border:none;padding:0;">';
+      var any = false;
+      DATA.forEach(function(d){
+        var ws = byLevel(d.words);
+        if(!ws.length) return;
+        any = true;
+        html += '<div class="sum-day"><div class="lbl">' + esc(d.label) + '</div>';
+        ws.forEach(function(wd){
+          html += '<a data-goto="' + esc(wd.w) + '"' + (isDone(wd.w) ? ' class="done"' : '') + '>' + esc(wd.w) + '</a>';
+        });
+        html += '</div>';
+      });
+      if(!any){
+        html += '<div class="empty">当前级别暂无单词，试试切换其他水平</div>';
+      } else {
+        html += '<div style="font-size:12px;color:#6B7280;margin-top:6px;">绿色 = 已掌握 · 点击任意单词跳到完整卡片</div>';
+      }
+      html += '</div>';
+      document.getElementById('sumList').innerHTML = html;
+      document.querySelectorAll('#sumList a[data-goto]').forEach(function(a){
+        a.addEventListener('click', function(){
+          var w = a.getAttribute('data-goto');
+          document.getElementById('searchInput').value = '';
+          switchTab('all');
+          var node = document.getElementById('w-' + w);
+          if(node){ node.scrollIntoView({behavior:'smooth', block:'start'}); node.style.boxShadow='0 0 0 2px #33466E'; setTimeout(function(){ node.style.boxShadow=''; }, 1600); }
+        });
+      });
+    }
+
+    // ===== 复习 =====
+    var revOnlyUndone = false;
+    var revQueue = [], revPos = 0, revSeen = 0, revKnown = 0;
+    function reviewPool(){
+      return byLevel(ALL).filter(function(wd){ return !revOnlyUndone || !isDone(wd.w); });
+    }
+    function shuffle(a){
+      for(var i = a.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    function renderReview(){
+      document.getElementById('revMode').textContent = '范围：' + (revOnlyUndone ? '未掌握单词' : '全部单词');
+      var area = document.getElementById('revArea');
+      var pool = reviewPool();
+      if(!pool.length){
+        area.innerHTML = '<div class="rev-empty">当前级别没有可复习的单词。<br><br><button class="btn primary" id="revGoPick">切换水平</button></div>';
+        var rp = document.getElementById('revGoPick');
+        if(rp) rp.onclick = function(){ showLevelPicker(); };
+        document.getElementById('revBar').textContent = '';
+        return;
+      }
+      if(!revQueue.length){
+        document.getElementById('revBar').innerHTML = '共 <b>' + pool.length + '</b> 个单词待复习 · 点击卡片查看释义';
+        area.innerHTML = '<div class="rev-empty">准备好了吗？<br><br><button class="btn primary" id="revGo">开始</button></div>';
+        var go = document.getElementById('revGo');
+        if(go) go.onclick = function(){
+          revQueue = shuffle(pool.slice());
+          revPos = 0; revSeen = 0; revKnown = 0;
+          showRevCard();
+        };
+        return;
+      }
+      showRevCard();
+    }
+    function showRevCard(){
+      var area = document.getElementById('revArea');
+      var wd = revQueue[revPos];
+      document.getElementById('revBar').innerHTML =
+        '第 <b>' + (revPos + 1) + '</b> / ' + revQueue.length + ' 个 · 本轮已会 <b>' + revKnown + '</b>';
+      area.innerHTML =
+        '<div class="flip-wrap"><div class="flip" id="flipCard">' +
+        '<div class="face front"><div class="w">' + esc(wd.w) + '</div>' +
+        '<div class="p">' + esc(wd.ipa || '') + ' · ' + esc(wd.pos || '') + ' · ' + esc(wd.level || '') + '</div>' +
+        '<div class="hint">点击卡片查看释义</div></div>' +
+        '<div class="face back"><div class="bd"><span class="ip">' + esc(wd.ipa || '') + '</span>' +
+        '<div class="df">' + esc(wd.pos || '') + ' ' + esc(wd.def) + '</div>' +
+        (wd.ex || []).map(function(e){ return '<div class="ex">' + esc(e[0]) + '<br><span class="zh">' + esc(e[1]) + '</span></div>'; }).join('') +
+        (wd.tip ? '<div class="tip"><b>记忆：</b>' + esc(wd.tip) + '</div>' : '') +
+        '</div></div></div></div>' +
+        '<div class="rev-actions"><button class="btn no" id="revNo">没记住</button>' +
+        '<button class="btn yes" id="revYes">记住了</button></div>';
+      var card = document.getElementById('flipCard');
+      card.addEventListener('click', function(){ card.classList.toggle('show'); });
+      document.getElementById('revNo').addEventListener('click', function(e){
+        e.stopPropagation();
+        setDone(wd.w, false);
+        revSeen++;
+        nextRev();
+      });
+      document.getElementById('revYes').addEventListener('click', function(e){
+        e.stopPropagation();
+        setDone(wd.w, true);
+        revSeen++; revKnown++;
+        nextRev();
+      });
+    }
+    function nextRev(){
+      revPos++;
+      if(revPos >= revQueue.length){
+        var area = document.getElementById('revArea');
+        var pct = revQueue.length ? Math.round(revKnown / revQueue.length * 100) : 0;
+        area.innerHTML = '<div class="rev-empty">本轮完成：' + revQueue.length + ' 个，记住了 <b>' + revKnown +
+          '</b> 个（' + pct + '%）。<br><br>' +
+          '<button class="btn" id="revAgain">再来一轮</button> <button class="btn primary" id="revUndoneOnly">只练没记住的</button></div>';
+        document.getElementById('revBar').textContent = '本轮复习完成';
+        document.getElementById('revAgain').onclick = function(){ revQueue = []; renderReview(); };
+        document.getElementById('revUndoneOnly').onclick = function(){ revOnlyUndone = true; revQueue = []; renderReview(); };
+        return;
+      }
+      showRevCard();
+    }
+    document.getElementById('revMode').addEventListener('click', function(){
+      revOnlyUndone = !revOnlyUndone; revQueue = []; renderReview();
+    });
+    document.getElementById('revStart').addEventListener('click', function(){
+      revQueue = []; renderReview();
+    });
+
+    // ===== 级别切换 =====
+    document.getElementById('lvBadge').addEventListener('click', showLevelPicker);
+
+    // ===== 掌握按钮事件委托 =====
+    document.addEventListener('click', function(e){
+      var b = e.target.closest('.master-btn');
+      if(!b) return;
+      var w = b.getAttribute('data-w');
+      var v = !isDone(w);
+      setDone(w, v);
+      b.textContent = v ? '已掌握' : '标记掌握';
+      b.classList.toggle('on', v);
+    });
+
+    // ===== 启动：闪屏期间自动拉取远程词库 =====
+    var saved = null;
+    try { saved = localStorage.getItem(LKEY); } catch(e){}
+    if(saved && LEVELS.some(function(l){ return l.id === saved; })){
+      curLevel = saved;
+    }
+    fetchRemote(function(){
+      refreshAllData();
+      setTimeout(function(){
+        if(curLevel){ showMain(); }
+        else { showLevelPicker(); }
+      }, 700);
+    });
+  } catch(err){
+    var wrap = document.getElementById('statsBar');
+    if(wrap) wrap.textContent = '加载出错';
+    var v = document.getElementById('view-today');
+    if(v) v.innerHTML = '<div class="empty">页面加载失败：' + esc(err.message) + '</div>';
+    document.getElementById('splash').classList.add('hide');
+  }
+})();
+</script>
+</body>
+</html>
