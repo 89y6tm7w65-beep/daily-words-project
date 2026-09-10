@@ -48,18 +48,21 @@
   .lv-info .n{font-size:11.5px; color:var(--accent); margin-top:4px; font-weight:600;}
 
   /* ===== Header ===== */
-  header.top{background:var(--accent); color:#fff; padding:22px 16px 18px; margin-bottom:14px;}
+  header.top{position:sticky; top:0; z-index:50; background:linear-gradient(160deg,rgba(45,60,95,.72) 0%,rgba(30,42,68,.72) 100%); backdrop-filter:blur(26px) saturate(1.6); -webkit-backdrop-filter:blur(26px) saturate(1.6); color:#fff; padding:14px 14px 8px; margin-bottom:14px; box-shadow:0 4px 18px rgba(15,25,45,.16);}
   .top-inner{max-width:920px; margin:0 auto; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:8px;}
   .top-inner h1{font-size:20px; font-weight:700;}
   .top-inner p{font-size:12.5px; opacity:.85; margin-top:3px;}
-  .stats{font-size:12.5px; background:rgba(255,255,255,.14); border-radius:999px; padding:6px 14px;}
   .lv-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:4px 14px; font-size:12.5px; color:#fff; cursor:pointer; transition:background .15s;}
   .lv-badge:hover{background:rgba(255,255,255,.26);}
 
   /* ===== Tabs ===== */
-  nav.tabs{display:flex; gap:6px; margin:14px 0 16px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:5px;}
-  .tab{flex:1; text-align:center; font-size:14px; font-weight:500; color:var(--sub); padding:8px 0; border-radius:9px; cursor:pointer; user-select:none; transition:all .15s;}
-  .tab.active{background:var(--accent); color:#fff;}
+  nav.tabs{display:flex; gap:4px; max-width:920px; margin:12px auto 0; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:3px; position:relative;}
+  .tab-glider{position:absolute; top:3px; bottom:3px; left:3px; width:calc(25% - 3px); background:rgba(255,255,255,.92); border-radius:999px; box-shadow:0 1px 8px rgba(20,30,55,.18); transition:left .38s cubic-bezier(.25,1.3,.4,1), width .38s cubic-bezier(.25,1.3,.4,1); z-index:0;}
+  .tab{flex:1; text-align:center; font-size:13.5px; font-weight:500; color:rgba(255,255,255,.88); padding:5px 0; border-radius:999px; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; position:relative; z-index:1; transition:transform .12s ease, background .18s, color .18s, box-shadow .18s;}
+  .tab:active{transform:scale(.93);}
+  .tab.active{background:rgba(255,255,255,.92); color:#2A3A5C; font-weight:600; box-shadow:0 1px 8px rgba(20,30,55,.18);}
+  @keyframes tabPop{0%{transform:scale(.9);} 55%{transform:scale(1.06);} 100%{transform:scale(1);}}
+  .tab.pop{animation:tabPop .32s cubic-bezier(.22,1.61,.36,1);}
 
   /* ===== Common card ===== */
   .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px 17px; margin-bottom:12px; scroll-margin-top:12px;}
@@ -68,13 +71,23 @@
   .card .ipa{font-size:13px; color:var(--sub); font-style:italic;}
   .card .def{font-size:13.5px; margin:3px 0 10px;}
   .card .def b{color:var(--warn);}
-  .card .ex{font-size:13px; background:#FAF9F5; border-radius:8px; padding:7px 10px; margin-bottom:6px;}
+  .card .ex{font-size:13px; background:var(--bg); border-radius:8px; padding:7px 10px; margin-bottom:6px;}
   .card .ex .zh{color:var(--sub);}
   .card .tip{margin-top:8px; font-size:12.5px; background:var(--accent-soft); border-radius:8px; padding:8px 10px;}
   .card .tip b{color:var(--accent-ink);}
   .card .foot{display:flex; align-items:center; justify-content:space-between; margin-top:10px; gap:8px;}
   .master-btn{font-size:12.5px; border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:999px; padding:5px 14px; cursor:pointer; transition:all .15s;}
   .master-btn.on{background:var(--ok-soft); border-color:var(--ok); color:var(--ok); font-weight:600;}
+  .say{display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:600; color:var(--accent-ink); background:var(--accent-soft); border:none; border-radius:999px; padding:4px 10px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:transform .12s ease, filter .12s ease;}
+  .say:active{transform:scale(.95); filter:brightness(.88);}
+  .say svg{width:14px; height:14px; fill:currentColor; flex:0 0 auto;}
+  .saved-hint{font-size:12.5px; color:var(--sub); margin:2px 2px 10px;}
+  .srow{display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:9px 12px; margin-bottom:8px; cursor:pointer; transition:background .15s;}
+  .srow:active{background:var(--accent-soft);}
+  .srow .sw{font-size:16px; font-weight:600; color:var(--ink); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .srow .sipa{font-size:12.5px; color:var(--sub); white-space:nowrap;}
+  .srow .sdef{font-size:12.5px; color:var(--sub); margin-left:auto; text-align:right; max-width:38%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex-shrink:1;}
+  .sdetail .card{margin-top:-4px;}
   .card .date-tag{font-size:11.5px; color:var(--sub); background:var(--bg); border-radius:999px; padding:3px 10px;}
   .card .lvl-tag{font-size:11px; font-weight:600; border-radius:999px; padding:3px 9px;}
   .lvl-A1-A2{background:#E9F3EA; color:#3E7C4F;}
@@ -117,7 +130,7 @@
   .face.back .bd{font-size:13.5px;}
   .face.back .bd .ip{color:var(--sub); font-style:italic;}
   .face.back .bd .df{margin:6px 0 10px; font-weight:600; color:var(--accent-ink);}
-  .face.back .bd .ex{font-size:12.5px; background:#FAF9F5; border-radius:8px; padding:6px 9px; margin-bottom:6px;}
+  .face.back .bd .ex{font-size:12.5px; background:var(--bg); border-radius:8px; padding:6px 9px; margin-bottom:6px;}
   .face.back .bd .ex .zh{color:var(--sub);}
   .face.back .bd .tip{margin-top:6px; font-size:12px; background:var(--accent-soft); border-radius:8px; padding:7px 9px;}
   .rev-actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
@@ -134,6 +147,24 @@
   @media (max-width:480px){
     .face.front .w{font-size:25px;}
     .rev-actions .btn{min-width:0; flex:1;}
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#161B24; --card:#1E2530; --ink:#F2F4F8; --sub:#9AA5B5;
+      --line:#2C3542; --accent:#5B7BBE; --accent-soft:#26324A; --accent-ink:#C7D6F2;
+      --warn:#D8B46A; --ok:#6FBF8F; --ok-soft:#1E352B;
+    }
+    header.top{background:linear-gradient(160deg,rgba(40,52,82,.74) 0%,rgba(24,34,56,.74) 100%);}
+    nav.tabs{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.12);}
+    .tab-glider{background:rgba(235,240,248,.94); box-shadow:0 1px 10px rgba(0,0,0,.4);}
+    .tab.active{color:#20304F; box-shadow:0 1px 10px rgba(0,0,0,.35);}
+    .card .ex, .face.back .bd .ex{background:#141A22;}
+    .lvl-A1-A2{background:#1E352B; color:#6FBF8F;}
+    .lvl-B1-B2{background:#26324A; color:#C7D6F2;}
+    .lvl-C1-C2{background:#3A2F1E; color:#D8B46A;}
+    .sum-day a{background:#26324A; color:#C7D6F2;}
+    .sum-day a:hover{background:#2E3D5C;}
   }
 </style>
 </head>
@@ -156,21 +187,22 @@
   <div class="top-inner">
     <div>
       <h1>每日英语单词</h1>
-      <p>每天 8:30 推送 5 个实用词 · <span id="dataSrc">内置词库</span></p>
+      <p>每天8:30推送10个实用词·<span id="dataSrc">内置词库</span></p>
     </div>
     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
       <span class="lv-badge" id="lvBadge">C1-C2</span>
-      <span class="stats" id="statsBar">加载中…</span>
     </div>
   </div>
 </header>
 
 <div class="wrap">
   <nav class="tabs" id="tabs">
+    <div class="tab-glider" id="tabGlider"></div>
     <div class="tab active" data-tab="today">今日</div>
     <div class="tab" data-tab="all">全部</div>
     <div class="tab" data-tab="summary">汇总</div>
     <div class="tab" data-tab="review">复习</div>
+    <div class="tab" data-tab="saved">生词</div>
   </nav>
 
   <section id="view-today"></section>
@@ -196,6 +228,15 @@
     <div id="revArea"></div>
   </section>
 
+  <section id="view-saved" style="display:none;">
+    <div class="search">
+      <input id="savedSearchInput" type="text" placeholder="搜索生词或释义…">
+      <span class="f-count" id="savedSearchCount"></span>
+    </div>
+    <div class="saved-hint" id="savedHint"></div>
+    <div id="savedList"></div>
+  </section>
+
   <footer>单词数据由每日推送自动累积 · 学习进度保存在本机浏览器</footer>
 </div>
 </div>
@@ -210,6 +251,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
 </script>
 
 <script src="words-data.js"></script>
+<script src="saved-words-data.js"></script>
 <script>
 (function(){
   "use strict";
@@ -320,12 +362,15 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     function cardHTML(wd){
       var tip = wd.tip ? '<div class="tip"><b>记忆：</b>' + esc(wd.tip) + '</div>' : '';
       var exs = (wd.ex || []).map(function(e){
-        return '<div class="ex">' + esc(e[0]) + '<br><span class="zh">' + esc(e[1]) + '</span></div>';
+        var en = e[0] || e, zh = e[1] || '';
+        return '<div class="ex">' + esc(en) + (zh ? '<br><span class="zh">' + esc(zh) + '</span>' : '') + '</div>';
       }).join('');
       var done = isDone(wd.w);
       var lvCls = 'lvl-' + esc(wd.level || 'B1-B2');
       return '<div class="card" id="w-' + esc(wd.w) + '">' +
         '<div class="word-line"><span class="word">' + esc(wd.w) + '</span>' +
+        '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-US"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>美</button>' +
+        '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-GB"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>英</button>' +
         '<span class="ipa">' + esc(wd.ipa || '') + '</span>' +
         '<span class="lvl-tag ' + lvCls + '">' + esc(wd.level || '') + '</span>' +
         '<span class="date-tag">' + esc(wd._label || '') + '</span></div>' +
@@ -351,9 +396,17 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     }
 
     // ===== Tab 切换 =====
-    var views = { today:'view-today', all:'view-all', summary:'view-summary', review:'view-review' };
+    var views = { today:'view-today', all:'view-all', summary:'view-summary', review:'view-review', saved:'view-saved' };
+    function moveGlider(){
+      var g = document.getElementById('tabGlider');
+      var active = document.querySelector('.tab.active');
+      if(!g || !active) return;
+      g.style.left = active.offsetLeft + 'px';
+      g.style.width = active.offsetWidth + 'px';
+    }
     function switchTab(tab){
-      document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
+      var el = null;
+      document.querySelectorAll('.tab').forEach(function(t){ var on = t.getAttribute('data-tab') === tab; t.classList.toggle('active', on); if(on) el = t; });
       Object.keys(views).forEach(function(k){
         document.getElementById(views[k]).style.display = (k === tab) ? '' : 'none';
       });
@@ -361,6 +414,9 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       if(tab === 'all') renderAll();
       if(tab === 'summary') renderSummary();
       if(tab === 'review') renderReview();
+      if(tab === 'saved') renderSaved();
+      moveGlider();
+      if(el){ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
     }
     document.getElementById('tabs').addEventListener('click', function(e){
       var t = e.target.closest('.tab'); if(t) switchTab(t.getAttribute('data-tab'));
@@ -439,10 +495,70 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
           document.getElementById('searchInput').value = '';
           switchTab('all');
           var node = document.getElementById('w-' + w);
-          if(node){ node.scrollIntoView({behavior:'smooth', block:'start'}); node.style.boxShadow='0 0 0 2px #33466E'; setTimeout(function(){ node.style.boxShadow=''; }, 1600); }
+          if(node){
+            var hdr = document.querySelector('header.top');
+            var off = hdr ? hdr.offsetHeight + 16 : 16;
+            var y = node.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - off;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+            node.style.boxShadow='0 0 0 2px #33466E';
+            setTimeout(function(){ node.style.boxShadow=''; }, 1600);
+          }
         });
       });
     }
+
+    // ===== 生词本（Pages 导入词库）=====
+    var savedQuery = '';
+    function renderSaved(){
+      var list = document.getElementById('savedList');
+      var hint = document.getElementById('savedHint');
+      var input = document.getElementById('savedSearchInput');
+      if(!list) return;
+      var q = savedQuery.trim().toLowerCase();
+      var pool = (window.SAVED_WORDS || []);
+      var total = pool.length;
+      var arr = q ? pool.filter(function(x){
+        return x.w.toLowerCase().indexOf(q) > -1 || (x.def||'').indexOf(q) > -1;
+      }) : pool;
+      var count = document.getElementById('savedSearchCount');
+      if(count) count.textContent = total + ' 词';
+      if(hint) hint.innerHTML = q ? '搜索到 <b>' + arr.length + '</b> 个' : '从你的 Pages 笔记导入的 <b>' + total + '</b> 个生词 · 点击单词展开卡片';
+      var html = arr.slice(0, 300).map(function(x){
+        var d = x.def || '';
+        return '<div class="srow" data-w="' + esc(x.w) + '">' +
+          '<button class="say" data-w="' + esc(x.w) + '" data-lang="en-US"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>美</button>' +
+          '<button class="say" data-w="' + esc(x.w) + '" data-lang="en-GB"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>英</button>' +
+          '<span class="sw">' + esc(x.w) + '</span>' +
+          '<span class="sipa">' + esc(x.ipa || '') + '</span>' +
+          '<span class="sdef">' + esc(d.length > 30 ? d.slice(0,30) + '…' : d) + '</span></div>' +
+          '<div class="sdetail" id="sd-' + esc(x.w) + '" style="display:none;"></div>';
+      }).join('');
+      list.innerHTML = html || '<div class="empty">没有匹配的生词</div>';
+      document.querySelectorAll('#savedList .srow').forEach(function(row){
+        row.addEventListener('click', function(ev){
+          if(ev.target.closest('.say')) return;
+          var w = row.getAttribute('data-w');
+          var box = document.getElementById('sd-' + w);
+          if(!box) return;
+          var open = box.style.display !== 'none';
+          document.querySelectorAll('#savedList .sdetail').forEach(function(b){ b.style.display='none'; });
+          if(!open){
+            var wd = (window.SAVED_WORDS||[]).find(function(x){ return x.w === w; });
+            if(wd) box.innerHTML = cardHTML(wd);
+            box.style.display = '';
+            box.scrollIntoView({ block:'nearest' });
+          }
+        });
+      });
+    }
+    var savedInput = document.getElementById('savedSearchInput');
+    if(savedInput){
+      savedInput.addEventListener('input', function(){
+        savedQuery = savedInput.value;
+        renderSaved();
+      });
+    }
+    window.addEventListener('resize', function(){ moveGlider(); });
 
     // ===== 复习 =====
     var revOnlyUndone = false;
@@ -489,17 +605,24 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       area.innerHTML =
         '<div class="flip-wrap"><div class="flip" id="flipCard">' +
         '<div class="face front"><div class="w">' + esc(wd.w) + '</div>' +
+        '<div class="sayline" style="display:flex; gap:8px; justify-content:center; margin-top:10px;">' +
+        '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-US"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>美</button>' +
+        '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-GB"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>英</button>' +
+        '</div>' +
         '<div class="p">' + esc(wd.ipa || '') + ' · ' + esc(wd.pos || '') + ' · ' + esc(wd.level || '') + '</div>' +
         '<div class="hint">点击卡片查看释义</div></div>' +
         '<div class="face back"><div class="bd"><span class="ip">' + esc(wd.ipa || '') + '</span>' +
         '<div class="df">' + esc(wd.pos || '') + ' ' + esc(wd.def) + '</div>' +
-        (wd.ex || []).map(function(e){ return '<div class="ex">' + esc(e[0]) + '<br><span class="zh">' + esc(e[1]) + '</span></div>'; }).join('') +
+        (wd.ex || []).map(function(e){ var en = e[0] || e, zh = e[1] || ''; return '<div class="ex">' + esc(en) + (zh ? '<br><span class="zh">' + esc(zh) + '</span>' : '') + '</div>'; }).join('') +
         (wd.tip ? '<div class="tip"><b>记忆：</b>' + esc(wd.tip) + '</div>' : '') +
         '</div></div></div></div>' +
         '<div class="rev-actions"><button class="btn no" id="revNo">没记住</button>' +
         '<button class="btn yes" id="revYes">记住了</button></div>';
       var card = document.getElementById('flipCard');
-      card.addEventListener('click', function(){ card.classList.toggle('show'); });
+      card.addEventListener('click', function(ev){
+        if(ev.target.closest('.say')) return;
+        card.classList.toggle('show');
+      });
       document.getElementById('revNo').addEventListener('click', function(e){
         e.stopPropagation();
         setDone(wd.w, false);
@@ -538,8 +661,30 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     // ===== 级别切换 =====
     document.getElementById('lvBadge').addEventListener('click', showLevelPicker);
 
+    // ===== 发音（优先原生插件，回退 Web Speech）=====
+    var _tts = (typeof Capacitor !== 'undefined' && Capacitor.Plugins && Capacitor.Plugins.TextToSpeech) ? Capacitor.Plugins.TextToSpeech : null;
+    function speakWord(w, lang){
+      try{
+        if(_tts){ _tts.speak({ text: w, lang: lang || 'en-US', rate: 0.92 }); return; }
+      }catch(err){}
+      try{
+        if('speechSynthesis' in window){
+          var u = new SpeechSynthesisUtterance(w);
+          u.lang = lang || 'en-US'; u.rate = 0.92;
+          speechSynthesis.cancel();
+          speechSynthesis.speak(u);
+        }
+      }catch(err){}
+    }
+
     // ===== 掌握按钮事件委托 =====
     document.addEventListener('click', function(e){
+      var s = e.target.closest('.say');
+      if(s){
+        var sw = s.getAttribute('data-w');
+        if(sw) speakWord(sw, s.getAttribute('data-lang') || 'en-US');
+        return;
+      }
       var b = e.target.closest('.master-btn');
       if(!b) return;
       var w = b.getAttribute('data-w');
@@ -563,8 +708,6 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       }, 700);
     });
   } catch(err){
-    var wrap = document.getElementById('statsBar');
-    if(wrap) wrap.textContent = '加载出错';
     var v = document.getElementById('view-today');
     if(v) v.innerHTML = '<div class="empty">页面加载失败：' + esc(err.message) + '</div>';
     document.getElementById('splash').classList.add('hide');
