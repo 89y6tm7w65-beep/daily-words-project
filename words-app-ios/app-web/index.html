@@ -193,9 +193,6 @@
       <span class="lv-badge" id="lvBadge">C1-C2</span>
     </div>
   </div>
-</header>
-
-<div class="wrap">
   <nav class="tabs" id="tabs">
     <div class="tab-glider" id="tabGlider"></div>
     <div class="tab active" data-tab="today">今日</div>
@@ -204,7 +201,9 @@
     <div class="tab" data-tab="review">复习</div>
     <div class="tab" data-tab="saved">生词</div>
   </nav>
+</header>
 
+<div class="wrap">
   <section id="view-today"></section>
 
   <section id="view-all" style="display:none;">
@@ -231,7 +230,6 @@
   <section id="view-saved" style="display:none;">
     <div class="search">
       <input id="savedSearchInput" type="text" placeholder="搜索生词或释义…">
-      <span class="f-count" id="savedSearchCount"></span>
     </div>
     <div class="saved-hint" id="savedHint"></div>
     <div id="savedList"></div>
@@ -520,8 +518,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       var arr = q ? pool.filter(function(x){
         return x.w.toLowerCase().indexOf(q) > -1 || (x.def||'').indexOf(q) > -1;
       }) : pool;
-      var count = document.getElementById('savedSearchCount');
-      if(count) count.textContent = total + ' 词';
+      var count = null;
       if(hint) hint.innerHTML = q ? '搜索到 <b>' + arr.length + '</b> 个' : '从你的 Pages 笔记导入的 <b>' + total + '</b> 个生词 · 点击单词展开卡片';
       var html = arr.slice(0, 300).map(function(x){
         var d = x.def || '';
