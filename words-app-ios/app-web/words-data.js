@@ -1131,7 +1131,7 @@ const WORDS_DATA = [
   {
    "w": "intact",
     "lv": "C1",
-   "level": "B1-B2",
+   "level": "C1-C2",
    "ipa": "/ɪnˈtækt/",
    "pos": "adj.",
    "def": "完好无损的；完整的",
@@ -1154,7 +1154,7 @@ const WORDS_DATA = [
   {
    "w": "allegedly",
     "lv": "C1",
-   "level": "B1-B2",
+   "level": "C1-C2",
    "ipa": "/əˈledʒɪdli/",
    "pos": "adv.",
    "def": "据称；据说（新闻常用）",
@@ -1177,7 +1177,7 @@ const WORDS_DATA = [
   {
    "w": "viable",
     "lv": "C1",
-   "level": "B1-B2",
+   "level": "C1-C2",
    "ipa": "/ˈvaɪəbl/",
    "pos": "adj.",
    "def": "可行的；能存活的",

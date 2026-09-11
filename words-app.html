@@ -264,7 +264,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
   "use strict";
   try {
     var DATA = (typeof WORDS_DATA !== "undefined") ? WORDS_DATA : [];
-    var REMOTE_URL = "https://cdn.jsdelivr.net/gh/89y6tm7w65-beep/daily-words-data@main/words-data.json?v=20260911"; // 远程词库：v 参数每次更新词库后递增，强制绕过 CDN 边缘缓存
+    var REMOTE_URL = "https://cdn.jsdelivr.net/gh/89y6tm7w65-beep/daily-words-data@main/words-data.json?v=20260911b"; // 远程词库：v 参数每次更新词库后递增，强制绕过 CDN 边缘缓存
     var dataSource = "内置词库";
     var KEY = "dailyWordsMastered_v1";
     var LKEY = "dailyWordsLevel_v1";
@@ -477,7 +477,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       var html = '<div class="card" style="background:transparent;border:none;padding:0;">';
       var any = false;
       DATA.forEach(function(d){
-        var ws = byLevel(d.words);
+        var ws = d.words;
         if(!ws.length) return;
         any = true;
         html += '<div class="sum-day"><div class="lbl">' + esc(d.label) + '</div>';
@@ -499,6 +499,18 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
           document.getElementById('searchInput').value = '';
           switchTab('all');
           var node = document.getElementById('w-' + w);
+          if(!node){
+            // 目标词不在当前级别列表：自动切换到包含它的级别再跳转
+            var owner = ALL.find(function(x){ return x.w === w; });
+            if(owner && owner.level && LEVELS.some(function(l){ return l.id === owner.level; })){
+              curLevel = owner.level;
+              try{ localStorage.setItem(LKEY, curLevel); }catch(e){}
+              var bd = document.getElementById('lvBadge');
+              if(bd) bd.textContent = curLevel;
+              renderAll();
+              node = document.getElementById('w-' + w);
+            }
+          }
           if(node){
             var hdr = document.querySelector('header.top');
             var off = hdr ? hdr.offsetHeight + 16 : 16;
