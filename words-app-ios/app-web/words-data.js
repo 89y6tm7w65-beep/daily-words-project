@@ -958,5 +958,231 @@ const WORDS_DATA = [
     "tip": "词根 ten-（握住，同根 tenant）→ 死死抓住不松手，即坚韧。"
    }
   ]
- }
+ },
+{
+ "date": "2026-09-11",
+ "label": "9月11日",
+ "words": [
+  {
+   "w": "sustain",
+   "level": "C1-C2",
+   "ipa": "/səˈsteɪn/",
+   "pos": "v.",
+   "def": "维持；支撑；遭受（损失、伤害）",
+   "ex": [
+    [
+     "The economy cannot sustain this level of growth forever.",
+     "经济无法永远维持这种增长速度。"
+    ],
+    [
+     "Several buildings sustained severe damage in the earthquake.",
+     "几栋建筑在地震中遭受了严重损坏。"
+    ],
+    [
+     "We need more funding to sustain the project long-term.",
+     "我们需要更多资金来长期维持这个项目。"
+    ]
+   ],
+   "tip": "sus-（自下而上）+ tain（握持）→ 从下面托住，即维持。同根词 maintain、contain。"
+  },
+  {
+   "w": "incur",
+   "level": "C1-C2",
+   "ipa": "/ɪnˈkɜː/",
+   "pos": "v.",
+   "def": "招致；蒙受（费用、债务、损失）",
+   "ex": [
+    [
+     "Any delay will incur additional costs.",
+     "任何延误都会产生额外费用。"
+    ],
+    [
+     "The company incurred heavy losses last quarter.",
+     "公司上季度蒙受了重大损失。"
+    ],
+    [
+     "He incurred a fine for parking in a restricted area.",
+     "他在禁停区停车而被罚款。"
+    ]
+   ],
+   "tip": "in-（进入）+ cur（跑）→ 跑进麻烦里，即招致。cur 同根：occur（发生）、current（流动的）。"
+  },
+  {
+   "w": "consolidate",
+   "level": "C1-C2",
+   "ipa": "/kənˈsɒlɪdeɪt/",
+   "pos": "v.",
+   "def": "巩固；合并",
+   "ex": [
+    [
+     "The two firms consolidated to form a single company.",
+     "两家公司合并组成了一家公司。"
+    ],
+    [
+     "She took time off to consolidate her position before the election.",
+     "选举前她休假来巩固自己的地位。"
+    ],
+    [
+     "The company consolidated its overseas operations.",
+     "公司合并了海外业务。"
+    ]
+   ],
+   "tip": "con-（一起）+ solid（坚固）+ -ate → 使一起变坚固，即巩固。solid 同根。"
+  },
+  {
+   "w": "prevalent",
+   "level": "C1-C2",
+   "ipa": "/ˈprevələnt/",
+   "pos": "adj.",
+   "def": "流行的；普遍的",
+   "ex": [
+    [
+     "This view is prevalent among young people.",
+     "这种观点在年轻人中很普遍。"
+    ],
+    [
+     "Dengue fever is prevalent in tropical regions.",
+     "登革热在热带地区流行。"
+    ],
+    [
+     "Identity theft has become increasingly prevalent online.",
+     "网络身份盗窃变得越来越普遍。"
+    ]
+   ],
+   "tip": "pre-（前面）+ val（力量）+ -ent → 力量压在前面、占主导，即普遍流行。val 同根：value、valid。"
+  },
+  {
+   "w": "discreet",
+   "level": "C1-C2",
+   "ipa": "/dɪˈskriːt/",
+   "pos": "adj.",
+   "def": "谨慎的；言行得体的；不显眼的",
+   "ex": [
+    [
+     "Please keep the matter discreet.",
+     "请对这件事谨慎保密。"
+    ],
+    [
+     "He made a discreet exit from the party.",
+     "他悄无声息地离开了聚会。"
+    ],
+    [
+     "The hotel offers discreet service for VIP guests.",
+     "这家酒店为贵宾提供贴心的低调服务。"
+    ]
+   ],
+   "tip": "dis-（分开）+ creet（分辨）→ 能分辨分寸，即谨慎。别和 discrete（离散的）混淆：discreet 指“嘴严”，discrete 指“分离”。"
+  },
+  {
+   "w": "intact",
+   "level": "B1-B2",
+   "ipa": "/ɪnˈtækt/",
+   "pos": "adj.",
+   "def": "完好无损的；完整的",
+   "ex": [
+    [
+     "The glass survived the fall intact.",
+     "玻璃杯摔下来却完好无损。"
+    ],
+    [
+     "Despite the fire, the building's structure remained intact.",
+     "尽管发生火灾，大楼结构依然完好。"
+    ],
+    [
+     "Her reputation remained intact after the scandal.",
+     "丑闻之后她的名誉依然无损。"
+    ]
+   ],
+   "tip": "in-（不）+ tact（接触）→ 没有被碰过，即完好。tact 同根：contact（接触）、tactile（触觉的）。"
+  },
+  {
+   "w": "allegedly",
+   "level": "B1-B2",
+   "ipa": "/əˈledʒɪdli/",
+   "pos": "adv.",
+   "def": "据称；据说（新闻常用）",
+   "ex": [
+    [
+     "The company allegedly violated environmental regulations.",
+     "该公司据称违反了环保法规。"
+    ],
+    [
+     "He allegedly stole classified documents.",
+     "他据称窃取了机密文件。"
+    ],
+    [
+     "The star was allegedly involved in a bribery scandal.",
+     "这位明星据称卷入了一起贿赂丑闻。"
+    ]
+   ],
+   "tip": "allege（宣称）+ -ly；新闻高频词，用在未经证实的指控前。词根 leg-（法律）→ “在法律上宣称”。"
+  },
+  {
+   "w": "viable",
+   "level": "B1-B2",
+   "ipa": "/ˈvaɪəbl/",
+   "pos": "adj.",
+   "def": "可行的；能存活的",
+   "ex": [
+    [
+     "Solar power is a viable alternative to fossil fuels.",
+     "太阳能是化石燃料的可行替代方案。"
+    ],
+    [
+     "The committee concluded that the plan was not economically viable.",
+     "委员会认定该计划在经济上不可行。"
+    ],
+    [
+     "The startup needs a viable business model to attract investors.",
+     "这家初创公司需要可行的商业模式来吸引投资者。"
+    ]
+   ],
+   "tip": "via（路）+ -able → 有路可走，即可行。同根：via（经由）、deviate（偏离）。"
+  },
+  {
+   "w": "prudent",
+   "level": "C1-C2",
+   "ipa": "/ˈpruːdnt/",
+   "pos": "adj.",
+   "def": "谨慎的；明智的",
+   "ex": [
+    [
+     "It would be prudent to save some money for emergencies.",
+     "存些钱以备不时之需是明智的。"
+    ],
+    [
+     "A prudent investor diversifies.",
+     "谨慎的投资者会分散投资。"
+    ],
+    [
+     "The government took prudent measures to control inflation.",
+     "政府采取审慎措施控制通胀。"
+    ]
+   ],
+   "tip": "prud = prov（预见）→ 有远见、想得长远，即谨慎明智。联想 provident（有远见的）。"
+  },
+  {
+   "w": "concur",
+   "level": "C1-C2",
+   "ipa": "/kənˈkɜː/",
+   "pos": "v.",
+   "def": "同意；同时发生",
+   "ex": [
+    [
+     "The committee concurred with the recommendation.",
+     "委员会同意这项建议。"
+    ],
+    [
+     "Experts concur that the policy is effective.",
+     "专家们一致认为这项政策有效。"
+    ],
+    [
+     "The two events concurred on the same day.",
+     "两件事碰巧在同一天发生。"
+    ]
+   ],
+   "tip": "con-（一起）+ cur（跑）→ 一起跑，即意见一致 / 同时发生。cur 同根：occur（发生）、current（当前的）。"
+  }
+ ]
+}
 ];

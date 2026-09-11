@@ -82,3 +82,16 @@
 - pervasive（C1-C2） //pəˈveɪsɪv//
 - tenacious（C1-C2） //təˈneɪʃəs//
 
+
+## 9月11日（2026-09-11）
+
+- sustain（C1-C2） //səˈsteɪn//
+- incur（C1-C2） //ɪnˈkɜː//
+- consolidate（C1-C2） //kənˈsɒlɪdeɪt//
+- prevalent（C1-C2） //ˈprevələnt//
+- discreet（C1-C2） //dɪˈskriːt//
+- intact（B1-B2） //ɪnˈtækt//
+- allegedly（B1-B2） //əˈledʒɪdli//
+- viable（B1-B2） //ˈvaɪəbl//
+- prudent（C1-C2） //ˈpruːdnt//
+- concur（C1-C2） //kənˈkɜː//
