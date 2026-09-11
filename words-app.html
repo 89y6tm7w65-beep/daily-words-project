@@ -402,7 +402,9 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       g.style.left = active.offsetLeft + 'px';
       g.style.width = active.offsetWidth + 'px';
     }
+    var currentTab = 'today';
     function switchTab(tab){
+      currentTab = tab;
       var el = null;
       document.querySelectorAll('.tab').forEach(function(t){ var on = t.getAttribute('data-tab') === tab; t.classList.toggle('active', on); if(on) el = t; });
       Object.keys(views).forEach(function(k){
@@ -515,11 +517,18 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       var q = savedQuery.trim().toLowerCase();
       var pool = (window.SAVED_WORDS || []);
       var total = pool.length;
+      var mastered = 0, i;
+      for(i = 0; i < pool.length; i++){ if(isDone(pool[i].w)) mastered++; }
       var arr = q ? pool.filter(function(x){
         return x.w.toLowerCase().indexOf(q) > -1 || (x.def||'').indexOf(q) > -1;
       }) : pool;
-      var count = null;
-      if(hint) hint.innerHTML = q ? '搜索到 <b>' + arr.length + '</b> 个' : '从你的 Pages 笔记导入的 <b>' + total + '</b> 个生词 · 点击单词展开卡片';
+      if(hint) hint.innerHTML = q
+        ? '搜索到 <b>' + arr.length + '</b> 个 · 已掌握 <b>' + mastered + '</b> 个'
+        : '从你的 Pages 笔记导入的 <b>' + total + '</b> 个生词 · 已掌握 <b>' + mastered + '</b> 个';
+      // 未掌握在前，已掌握沉底
+      var undone = [], doneArr = [];
+      for(i = 0; i < arr.length; i++){ (isDone(arr[i].w) ? doneArr : undone).push(arr[i]); }
+      arr = undone.concat(doneArr);
       var html = arr.slice(0, 300).map(function(x){
         var d = x.def || '';
         return '<div class="srow" data-w="' + esc(x.w) + '">' +
@@ -687,6 +696,10 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       setDone(w, v);
       b.textContent = v ? '已掌握' : '标记掌握';
       b.classList.toggle('on', v);
+      // 生词页标记掌握后，将该词沉底重排
+      if(currentTab === 'saved'){
+        setTimeout(renderSaved, 150);
+      }
     });
 
     // ===== 每日 8:30 本地通知 =====
