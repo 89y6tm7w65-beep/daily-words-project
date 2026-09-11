@@ -18,6 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         SceneDelegateProxy.shared.scene(scene, openURLContexts: URLContexts)
     }
 
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        // 打开/回到 App 时清除通知角标
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         SceneDelegateProxy.shared.scene(scene, continue: userActivity)
     }
