@@ -93,6 +93,11 @@
   .lvl-A1-A2{background:#E9F3EA; color:#3E7C4F;}
   .lvl-B1-B2{background:var(--accent-soft); color:var(--accent-ink);}
   .lvl-C1-C2{background:#F8EFE1; color:#8A6D3B;}
+  .lvl-A1,.lvl-A2,.slv-A1,.slv-A2{background:#E9F3EA; color:#3E7C4F;}
+  .lvl-B1,.lvl-B2,.slv-B1,.slv-B2{background:var(--accent-soft); color:var(--accent-ink);}
+  .lvl-C1,.lvl-C2,.slv-C1,.slv-C2{background:#F8EFE1; color:#8A6D3B;}
+  .lvl-none,.slv-none{background:#ECEFF4; color:#8A94A6;}
+  .srow .slv{font-size:10.5px; font-weight:600; border-radius:999px; padding:2px 8px; flex:0 0 auto;}
 
   /* ===== Day groups ===== */
   .day-group{margin-bottom:18px;}
@@ -163,6 +168,10 @@
     .lvl-A1-A2{background:#1E352B; color:#6FBF8F;}
     .lvl-B1-B2{background:#26324A; color:#C7D6F2;}
     .lvl-C1-C2{background:#3A2F1E; color:#D8B46A;}
+    .lvl-A1,.lvl-A2,.slv-A1,.slv-A2{background:#1E352B; color:#6FBF8F;}
+    .lvl-B1,.lvl-B2,.slv-B1,.slv-B2{background:#26324A; color:#C7D6F2;}
+    .lvl-C1,.lvl-C2,.slv-C1,.slv-C2{background:#3A2F1E; color:#D8B46A;}
+    .lvl-none,.slv-none{background:#2A2F3A; color:#9AA4B5;}
     .sum-day a{background:#26324A; color:#C7D6F2;}
     .sum-day a:hover{background:#2E3D5C;}
   }
@@ -364,13 +373,14 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
         return '<div class="ex">' + esc(en) + (zh ? '<br><span class="zh">' + esc(zh) + '</span>' : '') + '</div>';
       }).join('');
       var done = isDone(wd.w);
-      var lvCls = 'lvl-' + esc(wd.level || 'B1-B2');
+      var lv = wd.lv || wd.level || '';
+      var lvCls = 'lvl-' + esc(lv || 'none');
       return '<div class="card" id="w-' + esc(wd.w) + '">' +
         '<div class="word-line"><span class="word">' + esc(wd.w) + '</span>' +
         '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-US"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>美</button>' +
         '<button class="say" data-w="' + esc(wd.w) + '" data-lang="en-GB"><svg viewBox="0 0 16 16"><path d="M2 6.2v3.6h2.4L8 13V3L4.4 6.2H2zM10.2 8c0-1.1-.6-2.1-1.5-2.7v5.4c.9-.6 1.5-1.6 1.5-2.7z"/></svg>英</button>' +
         '<span class="ipa">' + esc(wd.ipa || '') + '</span>' +
-        '<span class="lvl-tag ' + lvCls + '">' + esc(wd.level || '') + '</span>' +
+        '<span class="lvl-tag ' + lvCls + '">' + esc(lv) + '</span>' +
         '<span class="date-tag">' + esc(wd._label || '') + '</span></div>' +
         '<div class="def"><b>' + esc(wd.pos || '') + '</b> ' + esc(wd.def) + '</div>' + exs + tip +
         '<div class="foot"><button class="master-btn' + (done ? ' on' : '') + '" data-w="' + esc(wd.w) + '">' +
@@ -531,8 +541,10 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       arr = undone.concat(doneArr);
       var html = arr.slice(0, 300).map(function(x){
         var d = x.def || '';
+        var lv = x.lv || 'none';
         return '<div class="srow" data-w="' + esc(x.w) + '">' +
           '<span class="sw">' + esc(x.w) + '</span>' +
+          '<span class="slv slv-' + esc(lv) + '">' + esc(lv) + '</span>' +
           '<span class="sipa">' + esc(x.ipa || '') + '</span>' +
           '<span class="sdef">' + esc(d.length > 42 ? d.slice(0,42) + '…' : d) + '</span></div>' +
           '<div class="sdetail" id="sd-' + esc(x.w) + '" style="display:none;"></div>';
@@ -724,13 +736,13 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     try { saved = localStorage.getItem(LKEY); } catch(e){}
     if(saved && LEVELS.some(function(l){ return l.id === saved; })){
       curLevel = saved;
+    } else {
+      curLevel = 'C1-C2';
+      try { localStorage.setItem(LKEY, curLevel); } catch(e){}
     }
     fetchRemote(function(){
       refreshAllData();
-      setTimeout(function(){
-        if(curLevel){ showMain(); }
-        else { showLevelPicker(); }
-      }, 700);
+      setTimeout(showMain, 700);
     });
   } catch(err){
     var v = document.getElementById('view-today');

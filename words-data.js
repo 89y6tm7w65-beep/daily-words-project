@@ -5,6 +5,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "commute",
+    "lv": "B2",
     "level": "A1-A2",
     "ipa": "/kəˈmjuːt/",
     "pos": "v.&n.",
@@ -23,6 +24,7 @@ const WORDS_DATA = [
    },
    {
     "w": "deadline",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/ˈdedlaɪn/",
     "pos": "n.",
@@ -41,6 +43,7 @@ const WORDS_DATA = [
    },
    {
     "w": "reimburse",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˌriːɪmˈbɜːs/",
     "pos": "v.",
@@ -59,6 +62,7 @@ const WORDS_DATA = [
    },
    {
     "w": "proactive",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˌprəʊˈæktɪv/",
     "pos": "adj.",
@@ -77,6 +81,7 @@ const WORDS_DATA = [
    },
    {
     "w": "negotiate",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/nɪˈɡəʊʃieɪt/",
     "pos": "v.",
@@ -101,6 +106,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "punctual",
+    "lv": "C2",
     "level": "A1-A2",
     "ipa": "/ˈpʌŋktʃuəl/",
     "pos": "adj.",
@@ -119,6 +125,7 @@ const WORDS_DATA = [
    },
    {
     "w": "groceries",
+    "lv": "B2",
     "level": "A1-A2",
     "ipa": "/ˈɡrəʊsəriz/",
     "pos": "n.",
@@ -137,6 +144,7 @@ const WORDS_DATA = [
    },
    {
     "w": "appointment",
+    "lv": "B1",
     "level": "A1-A2",
     "ipa": "/əˈpɔɪntmənt/",
     "pos": "n.",
@@ -155,6 +163,7 @@ const WORDS_DATA = [
    },
    {
     "w": "colleague",
+    "lv": "A2",
     "level": "A1-A2",
     "ipa": "/ˈkɒliːɡ/",
     "pos": "n.",
@@ -173,6 +182,7 @@ const WORDS_DATA = [
    },
    {
     "w": "procedure",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/prəˈsiːdʒə/",
     "pos": "n.",
@@ -197,6 +207,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "procrastinate",
+    "lv": "C2",
     "level": "C1-C2",
     "ipa": "/prəʊˈkræstɪneɪt/",
     "pos": "v.",
@@ -215,6 +226,7 @@ const WORDS_DATA = [
    },
    {
     "w": "meticulous",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/məˈtɪkjələs/",
     "pos": "adj.",
@@ -233,6 +245,7 @@ const WORDS_DATA = [
    },
    {
     "w": "streamline",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈstriːmlaɪn/",
     "pos": "v.",
@@ -251,6 +264,7 @@ const WORDS_DATA = [
    },
    {
     "w": "feasible",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/ˈfiːzəbl/",
     "pos": "adj.",
@@ -269,6 +283,7 @@ const WORDS_DATA = [
    },
    {
     "w": "accommodate",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/əˈkɒmədeɪt/",
     "pos": "v.",
@@ -293,6 +308,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "delegate",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˈdelɪɡeɪt/",
     "pos": "v.&n.",
@@ -311,6 +327,7 @@ const WORDS_DATA = [
    },
    {
     "w": "concise",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/kənˈsaɪs/",
     "pos": "adj.",
@@ -329,6 +346,7 @@ const WORDS_DATA = [
    },
    {
     "w": "prioritize",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/praɪˈɒrətaɪz/",
     "pos": "v.",
@@ -347,6 +365,7 @@ const WORDS_DATA = [
    },
    {
     "w": "replenish",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/rɪˈplenɪʃ/",
     "pos": "v.",
@@ -365,6 +384,7 @@ const WORDS_DATA = [
    },
    {
     "w": "coherent",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/kəʊˈhɪərənt/",
     "pos": "adj.",
@@ -389,6 +409,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "alleviate",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/əˈliːvieɪt/",
     "pos": "v.",
@@ -407,6 +428,7 @@ const WORDS_DATA = [
    },
    {
     "w": "pragmatic",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/præɡˈmætɪk/",
     "pos": "adj.",
@@ -425,6 +447,7 @@ const WORDS_DATA = [
    },
    {
     "w": "reconcile",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/ˈrekənsaɪl/",
     "pos": "v.",
@@ -443,6 +466,7 @@ const WORDS_DATA = [
    },
    {
     "w": "scrutinize",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/ˈskruːtənaɪz/",
     "pos": "v.",
@@ -461,6 +485,7 @@ const WORDS_DATA = [
    },
    {
     "w": "convene",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/kənˈviːn/",
     "pos": "v.",
@@ -485,6 +510,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "embark",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ɪmˈbɑːk/",
     "pos": "v.",
@@ -503,6 +529,7 @@ const WORDS_DATA = [
    },
    {
     "w": "facilitate",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/fəˈsɪlɪteɪt/",
     "pos": "v.",
@@ -521,6 +548,7 @@ const WORDS_DATA = [
    },
    {
     "w": "mitigate",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈmɪtɪɡeɪt/",
     "pos": "v.",
@@ -539,6 +567,7 @@ const WORDS_DATA = [
    },
    {
     "w": "ambiguous",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/æmˈbɪɡjuəs/",
     "pos": "adj.",
@@ -557,6 +586,7 @@ const WORDS_DATA = [
    },
    {
     "w": "cultivate",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˈkʌltɪveɪt/",
     "pos": "v.",
@@ -581,6 +611,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "advocate",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈædvəkeɪt/",
     "pos": "v.&n.",
@@ -599,6 +630,7 @@ const WORDS_DATA = [
    },
    {
     "w": "contemplate",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˈkɒntəmpleɪt/",
     "pos": "v.",
@@ -617,6 +649,7 @@ const WORDS_DATA = [
    },
    {
     "w": "resilient",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/rɪˈzɪliənt/",
     "pos": "adj.",
@@ -635,6 +668,7 @@ const WORDS_DATA = [
    },
    {
     "w": "substantial",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/səbˈstænʃl/",
     "pos": "adj.",
@@ -653,6 +687,7 @@ const WORDS_DATA = [
    },
    {
     "w": "versatile",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ˈvɜːsətaɪl/",
     "pos": "adj.",
@@ -677,6 +712,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "articulate",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ɑːˈtɪkjuleɪt/",
     "pos": "v.&adj.",
@@ -695,6 +731,7 @@ const WORDS_DATA = [
    },
    {
     "w": "fluctuate",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈflʌktʃueɪt/",
     "pos": "v.",
@@ -713,6 +750,7 @@ const WORDS_DATA = [
    },
    {
     "w": "incentive",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/ɪnˈsentɪv/",
     "pos": "n.",
@@ -731,6 +769,7 @@ const WORDS_DATA = [
    },
    {
     "w": "reluctant",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/rɪˈlʌktənt/",
     "pos": "adj.",
@@ -749,6 +788,7 @@ const WORDS_DATA = [
    },
    {
     "w": "undermine",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˌʌndəˈmaɪn/",
     "pos": "v.",
@@ -773,6 +813,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "deviate",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈdiːvieɪt/",
     "pos": "v.",
@@ -791,6 +832,7 @@ const WORDS_DATA = [
    },
    {
     "w": "elaborate",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/ɪˈlæbərət/",
     "pos": "adj.&v.",
@@ -809,6 +851,7 @@ const WORDS_DATA = [
    },
    {
     "w": "implement",
+    "lv": "B2",
     "level": "B1-B2",
     "ipa": "/ˈɪmplɪment/",
     "pos": "v.",
@@ -827,6 +870,7 @@ const WORDS_DATA = [
    },
    {
     "w": "proficient",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/prəˈfɪʃnt/",
     "pos": "adj.",
@@ -845,6 +889,7 @@ const WORDS_DATA = [
    },
    {
     "w": "persistent",
+    "lv": "C1",
     "level": "B1-B2",
     "ipa": "/pəˈsɪstənt/",
     "pos": "adj.",
@@ -869,6 +914,7 @@ const WORDS_DATA = [
   "words": [
    {
     "w": "candid",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/ˈkændɪd/",
     "pos": "adj.",
@@ -887,6 +933,7 @@ const WORDS_DATA = [
    },
    {
     "w": "discrepancy",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/dɪsˈkrepənsi/",
     "pos": "n.",
@@ -905,6 +952,7 @@ const WORDS_DATA = [
    },
    {
     "w": "deter",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/dɪˈtɜː/",
     "pos": "v.",
@@ -923,6 +971,7 @@ const WORDS_DATA = [
    },
    {
     "w": "pervasive",
+    "lv": "B2",
     "level": "C1-C2",
     "ipa": "/pəˈveɪsɪv/",
     "pos": "adj.",
@@ -941,6 +990,7 @@ const WORDS_DATA = [
    },
    {
     "w": "tenacious",
+    "lv": "C1",
     "level": "C1-C2",
     "ipa": "/təˈneɪʃəs/",
     "pos": "adj.",
@@ -965,6 +1015,7 @@ const WORDS_DATA = [
  "words": [
   {
    "w": "sustain",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/səˈsteɪn/",
    "pos": "v.",
@@ -987,6 +1038,7 @@ const WORDS_DATA = [
   },
   {
    "w": "incur",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/ɪnˈkɜː/",
    "pos": "v.",
@@ -1009,6 +1061,7 @@ const WORDS_DATA = [
   },
   {
    "w": "consolidate",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/kənˈsɒlɪdeɪt/",
    "pos": "v.",
@@ -1031,6 +1084,7 @@ const WORDS_DATA = [
   },
   {
    "w": "prevalent",
+    "lv": "B2",
    "level": "C1-C2",
    "ipa": "/ˈprevələnt/",
    "pos": "adj.",
@@ -1053,6 +1107,7 @@ const WORDS_DATA = [
   },
   {
    "w": "discreet",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/dɪˈskriːt/",
    "pos": "adj.",
@@ -1075,6 +1130,7 @@ const WORDS_DATA = [
   },
   {
    "w": "intact",
+    "lv": "C1",
    "level": "B1-B2",
    "ipa": "/ɪnˈtækt/",
    "pos": "adj.",
@@ -1097,6 +1153,7 @@ const WORDS_DATA = [
   },
   {
    "w": "allegedly",
+    "lv": "C1",
    "level": "B1-B2",
    "ipa": "/əˈledʒɪdli/",
    "pos": "adv.",
@@ -1119,6 +1176,7 @@ const WORDS_DATA = [
   },
   {
    "w": "viable",
+    "lv": "C1",
    "level": "B1-B2",
    "ipa": "/ˈvaɪəbl/",
    "pos": "adj.",
@@ -1141,6 +1199,7 @@ const WORDS_DATA = [
   },
   {
    "w": "prudent",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/ˈpruːdnt/",
    "pos": "adj.",
@@ -1163,6 +1222,7 @@ const WORDS_DATA = [
   },
   {
    "w": "concur",
+    "lv": "C1",
    "level": "C1-C2",
    "ipa": "/kənˈkɜː/",
    "pos": "v.",
