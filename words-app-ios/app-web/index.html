@@ -728,6 +728,15 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
               schedule: { on: { hour: 8, minute: 30 }, repeats: true }
             }]}).then(function(){
               setNotifyState('通知已开启 · 每天8:30');
+              // ===== 测试通知：启动 5 秒后发一条，验证推送链路 =====
+              try{
+                LN.schedule({notifications:[{
+                  id: 102,
+                  title: '每日英语单词',
+                  body: '通知测试：你能收到这条，说明推送正常',
+                  schedule: { at: new Date(Date.now() + 5000) }
+                }]}).catch(function(){});
+              }catch(e){}
             });
           }
           setNotifyState('通知未开启（请在系统设置中允许）');
