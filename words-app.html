@@ -689,6 +689,23 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       b.classList.toggle('on', v);
     });
 
+    // ===== 每日 8:30 本地通知 =====
+    try{
+      var LN = window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.LocalNotifications;
+      if(LN){
+        LN.requestPermissions().then(function(perm){
+          if(perm && perm.display === 'granted'){
+            return LN.schedule({notifications:[{
+              id: 101,
+              title: '每日英语单词',
+              body: '今日 10 个新词已更新，点开学习',
+              schedule: { on: { hour: 8, minute: 30 }, repeats: true }
+            }]});
+          }
+        }).catch(function(){});
+      }
+    }catch(e){}
+
     // ===== 启动：闪屏期间自动拉取远程词库 =====
     var saved = null;
     try { saved = localStorage.getItem(LKEY); } catch(e){}
