@@ -305,6 +305,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
 
 <script src="words-data.js"></script>
 <script src="saved-words-data.js"></script>
+<script src="lemm-map.js"></script>
 <script>
 (function(){
   "use strict";
@@ -320,6 +321,21 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     function setSetting(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
     var store = null;
     try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ store = {}; }
+    // 词形归一迁移：生词库已把屈折形式还原为原型（running→run），
+    // 把旧词形上的「标记掌握」自动迁移到原型，避免标记"消失"
+    (function(){
+      if(!window.LEMM) return;
+      var changed = false;
+      Object.keys(store).forEach(function(k){
+        var to = window.LEMM[k];
+        if(to && to !== k){
+          if(!store[to]) store[to] = store[k];
+          delete store[k];
+          changed = true;
+        }
+      });
+      if(changed){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+    })();
     function saveStore(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
     function isDone(w){ return !!store[w]; }
     function setDone(w, v){ store[w] = v ? 1 : 0; saveStore(); }
