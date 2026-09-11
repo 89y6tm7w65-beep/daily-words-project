@@ -106,9 +106,10 @@
 
   /* ===== Search ===== */
   .search{display:flex; gap:8px; margin-bottom:14px;}
-  #view-saved .search, #view-saved #savedList{padding-right:30px;}
-  .alpha-nav{position:fixed; right:3px; top:50%; transform:translateY(-50%); z-index:40; display:flex; flex-direction:column; align-items:center; gap:0; padding:8px 4px; background:rgba(255,255,255,.6); -webkit-backdrop-filter:blur(18px) saturate(1.5); backdrop-filter:blur(18px) saturate(1.5); border:1px solid rgba(120,130,160,.18); border-radius:999px; box-shadow:0 4px 16px rgba(15,25,45,.08);}
-  .alpha-nav button{display:block; background:none; border:0; color:var(--ink); font-size:10.5px; font-weight:600; line-height:1; padding:3px 4px; border-radius:6px; cursor:pointer; opacity:.8; transition:opacity .12s, background .12s; font-family:inherit; min-width:20px;}
+  .alpha-nav{position:fixed; left:12px; right:12px; top:calc(env(safe-area-inset-top,0px) + 78px); z-index:40; display:flex; align-items:center; overflow-x:auto; gap:0; background:rgba(255,255,255,.78); -webkit-backdrop-filter:blur(20px) saturate(1.6); backdrop-filter:blur(20px) saturate(1.6); border:1px solid rgba(120,130,160,.18); border-radius:999px; box-shadow:0 6px 22px rgba(15,25,45,.14); padding:5px 8px; opacity:0; pointer-events:none; transition:opacity .22s; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+  .alpha-nav::-webkit-scrollbar{display:none;}
+  .alpha-nav.show{opacity:1; pointer-events:auto;}
+  .alpha-nav button{flex:0 0 auto; min-width:22px; padding:5px 2px; background:none; border:0; color:var(--ink); font-size:12px; font-weight:600; line-height:1; border-radius:8px; cursor:pointer; opacity:.85; transition:opacity .12s, background .12s; font-family:inherit; text-align:center;}
   .alpha-nav button:active{opacity:1; background:var(--accent-soft); color:var(--accent-ink);}
   .search input{flex:1; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:10px 18px; font-size:16px; color:var(--ink); outline:none;}
   .search input:focus{border-color:var(--accent);}
@@ -178,7 +179,7 @@
     .lvl-none,.slv-none{background:#2A2F3A; color:#9AA4B5;}
     .sum-day a{background:#26324A; color:#C7D6F2;}
     .sum-day a:hover{background:#2E3D5C;}
-    .alpha-nav{background:rgba(28,34,52,.62); border-color:rgba(255,255,255,.14);}
+    .alpha-nav{background:rgba(26,32,50,.78); border-color:rgba(255,255,255,.14);}
     .alpha-nav button{color:#DCE3F0;}
   }
 </style>
@@ -429,7 +430,10 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       if(tab === 'summary') renderSummary();
       if(tab === 'review') renderReview();
       if(tab === 'saved') renderSaved();
-      if(alphaNav) alphaNav.style.display = (tab === 'saved' && !savedQuery.trim()) ? '' : 'none';
+      if(alphaNav){
+        alphaNav.style.display = (tab === 'saved') ? '' : 'none';
+        alphaNav.classList.remove('show');
+      }
       moveGlider();
       if(el){ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
     }
@@ -589,36 +593,53 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       savedInput.addEventListener('input', function(){
         savedQuery = savedInput.value;
         renderSaved();
-        if(alphaNav) alphaNav.style.display = savedQuery.trim() ? 'none' : '';
+        if(alphaNav){
+          alphaNav.style.display = savedQuery.trim() ? 'none' : '';
+          alphaNav.classList.remove('show');
+        }
       });
     }
 
-    // ===== 生词 A-Z 字母导航 =====
+    // ===== 生词 A-Z 字母导航（滚动时在列表上方浮现，停止后自动隐藏）=====
     var alphaNav = document.getElementById('alphaNav');
+    var navTimer = null, navSuppress = false;
+    function hideAlphaNav(){ if(navTimer){ clearTimeout(navTimer); navTimer = null; } if(alphaNav) alphaNav.classList.remove('show'); }
+    function showAlphaNav(){
+      if(navSuppress || !alphaNav || alphaNav.style.display === 'none') return;
+      alphaNav.classList.add('show');
+      if(navTimer){ clearTimeout(navTimer); }
+      navTimer = setTimeout(function(){ alphaNav.classList.remove('show'); }, 2000);
+    }
     if(alphaNav){
       var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
       alphaNav.innerHTML = letters.map(function(l){
         return '<button type="button" data-l="' + l + '">' + l.toUpperCase() + '</button>';
       }).join('');
+      // 字母条初始定位到中间（M/N），两端可横向滑动
+      setTimeout(function(){
+        alphaNav.scrollLeft = (alphaNav.scrollWidth - alphaNav.clientWidth) / 2;
+      }, 300);
       alphaNav.addEventListener('click', function(e){
         var b = e.target.closest('button');
-        if(b) savedJump(b.getAttribute('data-l'));
+        if(b){
+          var l = b.getAttribute('data-l');
+          hideAlphaNav();
+          navSuppress = true;
+          savedJump(l);
+          setTimeout(function(){ navSuppress = false; }, 3000);
+        }
       });
-      // 触摸拖动快速选字母
-      var dragging = false;
-      alphaNav.addEventListener('touchstart', function(e){ dragging = true; navPick(e); }, {passive:true});
-      alphaNav.addEventListener('touchmove', function(e){ if(dragging) navPick(e); }, {passive:true});
-      alphaNav.addEventListener('touchend', function(){ dragging = false; });
-      function navPick(e){
-        var t = e.touches[0];
-        var btns = alphaNav.querySelectorAll('button');
-        if(!btns.length) return;
-        var r = alphaNav.getBoundingClientRect();
-        var idx = Math.floor((t.clientY - r.top) / (r.height / btns.length));
-        idx = Math.max(0, Math.min(btns.length - 1, idx));
-        savedJump(btns[idx].getAttribute('data-l'));
-      }
     }
+    var navScrollPending = false;
+    window.addEventListener('scroll', function(){
+      if(currentTab !== 'saved') return;
+      if(navScrollPending) return;
+      navScrollPending = true;
+      setTimeout(function(){
+        navScrollPending = false;
+        showAlphaNav();
+      }, 60);
+    }, {passive:true});
     function savedJump(l){
       var rows = document.querySelectorAll('#savedList .srow');
       var target = null;
