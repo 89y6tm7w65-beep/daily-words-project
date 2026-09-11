@@ -106,11 +106,12 @@
 
   /* ===== Search ===== */
   .search{display:flex; gap:8px; margin-bottom:14px;}
-  .alpha-nav{position:fixed; right:4px; top:calc(env(safe-area-inset-top,0px) + 74px); bottom:calc(env(safe-area-inset-bottom,0px) + 44px); z-index:40; display:flex; flex-direction:column; justify-content:space-between; align-items:center; gap:0; background:rgba(255,255,255,.5); -webkit-backdrop-filter:blur(16px) saturate(1.4); backdrop-filter:blur(16px) saturate(1.4); border:1px solid rgba(120,130,160,.14); border-radius:999px; padding:7px 3px; opacity:0; pointer-events:none; transition:opacity .22s; box-shadow:0 4px 16px rgba(15,25,45,.08);}
+  .alpha-nav{position:fixed; right:4px; top:130px; bottom:calc(env(safe-area-inset-bottom,0px) + 44px); z-index:40; display:flex; flex-direction:column; justify-content:space-between; align-items:center; gap:0; background:rgba(255,255,255,.5); -webkit-backdrop-filter:blur(16px) saturate(1.4); backdrop-filter:blur(16px) saturate(1.4); border:1px solid rgba(120,130,160,.14); border-radius:999px; padding:7px 3px; opacity:0; pointer-events:none; transition:opacity .22s; box-shadow:0 4px 16px rgba(15,25,45,.08);}
   .alpha-nav.show{opacity:1; pointer-events:auto;}
   .alpha-nav button{display:block; flex:0 0 auto; min-width:21px; padding:2px 0; background:none; border:0; color:var(--ink); font-size:11px; font-weight:600; line-height:1; border-radius:8px; cursor:pointer; opacity:.5; transform:scale(.82); transition:transform .18s cubic-bezier(.25,1.2,.4,1), opacity .18s, background .18s; font-family:inherit; text-align:center;}
   .alpha-nav button.focus{transform:scale(1.35); opacity:1; color:var(--accent-ink); background:var(--accent-soft); position:relative; z-index:1;}
   .alpha-nav button:active{opacity:1;}
+  #navBubble{position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); z-index:60; min-width:88px; height:88px; border-radius:24px; display:flex; align-items:center; justify-content:center; background:rgba(40,52,82,.9); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); color:#fff; font-size:42px; font-weight:700; box-shadow:0 12px 36px rgba(10,18,34,.35); pointer-events:none;}
   .search input{flex:1; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:10px 18px; font-size:16px; color:var(--ink); outline:none;}
   .search input:focus{border-color:var(--accent);}
   .search .f-count{font-size:12px; color:var(--sub); align-self:center; white-space:nowrap;}
@@ -258,6 +259,7 @@
 
 <!-- ===== 生词 A-Z 字母导航 ===== -->
 <div id="alphaNav" class="alpha-nav" style="display:none;"></div>
+<div id="navBubble" style="display:none;">A</div>
 
 
 <script>
@@ -601,40 +603,87 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       });
     }
 
-    // ===== 生词 A-Z 字母导航（滚动时在列表上方浮现，停止后自动隐藏）=====
+    // ===== 生词 A-Z 字母导航（右侧竖排，滚动条式拖动定位）=====
     var alphaNav = document.getElementById('alphaNav');
+    var navBubble = document.getElementById('navBubble');
     var navTimer = null, navSuppress = false;
-    function hideAlphaNav(){ if(navTimer){ clearTimeout(navTimer); navTimer = null; } if(alphaNav) alphaNav.classList.remove('show'); }
-    function showAlphaNav(){
-      if(navSuppress || !alphaNav || alphaNav.style.display === 'none') return;
-      alphaNav.classList.add('show');
+    function hideAlphaNav(){
+      if(navTimer){ clearTimeout(navTimer); navTimer = null; }
+      if(alphaNav) alphaNav.classList.remove('show');
+    }
+    function resetNavTimer(){
       if(navTimer){ clearTimeout(navTimer); }
       navTimer = setTimeout(function(){ alphaNav.classList.remove('show'); }, 2000);
     }
+    function showAlphaNav(){
+      if(navSuppress || !alphaNav || alphaNav.style.display === 'none') return;
+      var hdr = document.querySelector('header.top');
+      var top = hdr ? hdr.offsetHeight + 6 : 130;
+      alphaNav.style.top = top + 'px';
+      alphaNav.classList.add('show');
+      resetNavTimer();
+    }
+    var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    var navDragging = false, dragRAF = false, lastDragEnd = 0;
+    function navPick(e){
+      if(!alphaNav || alphaNav.style.display === 'none' || !alphaNav.classList.contains('show')) return;
+      resetNavTimer();
+      var t = e.touches[0];
+      var r = alphaNav.getBoundingClientRect();
+      var idx = Math.floor((t.clientY - r.top) / (r.height / letters.length));
+      idx = Math.max(0, Math.min(letters.length - 1, idx));
+      var l = letters[idx];
+      if(navBubble){ navBubble.textContent = l.toUpperCase(); navBubble.style.display = 'flex'; }
+      if(!dragRAF){
+        dragRAF = true;
+        requestAnimationFrame(function(){
+          dragRAF = false;
+          savedJump(l);
+        });
+      }
+    }
     if(alphaNav){
-      var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
       alphaNav.innerHTML = letters.map(function(l){
         return '<button type="button" data-l="' + l + '">' + l.toUpperCase() + '</button>';
       }).join('');
       alphaNav.addEventListener('click', function(e){
+        if(Date.now() - lastDragEnd < 500) return;
         var b = e.target.closest('button');
         if(b){
           var l = b.getAttribute('data-l');
           hideAlphaNav();
+          if(navBubble) navBubble.style.display = 'none';
           navSuppress = true;
           savedJump(l);
           setTimeout(function(){ navSuppress = false; }, 3000);
         }
       });
+      // 按住上下滑动定位（滚动条式）
+      alphaNav.addEventListener('touchstart', function(e){
+        navDragging = true;
+        showAlphaNav();
+        navPick(e);
+      }, {passive:true});
+      document.addEventListener('touchmove', function(e){
+        if(!navDragging) return;
+        e.preventDefault();
+        navPick(e);
+      }, {passive:false});
+      document.addEventListener('touchend', function(){
+        if(!navDragging) return;
+        navDragging = false;
+        lastDragEnd = Date.now();
+        if(navBubble) navBubble.style.display = 'none';
+      });
     }
     var navFocusPending = false;
     window.addEventListener('scroll', function(){
       if(currentTab !== 'saved') return;
-      showAlphaNav();
       if(navFocusPending) return;
       navFocusPending = true;
       requestAnimationFrame(function(){
         navFocusPending = false;
+        showAlphaNav();
         updateNavFocus();
       });
     }, {passive:true});
