@@ -112,6 +112,17 @@
   .alpha-nav button.focus{transform:scale(1.35); opacity:1; color:var(--accent-ink); background:var(--accent-soft); position:relative; z-index:1;}
   .alpha-nav button:active{opacity:1;}
   #navBubble{position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); z-index:60; min-width:88px; height:88px; border-radius:24px; display:flex; align-items:center; justify-content:center; background:rgba(40,52,82,.9); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); color:#fff; font-size:42px; font-weight:700; box-shadow:0 12px 36px rgba(10,18,34,.35); pointer-events:none;}
+  #settingsView{position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(10,16,30,.45); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+  .set-panel{width:100%; max-width:400px; background:var(--card); border:1px solid var(--line); border-radius:26px; padding:24px 20px 20px; box-shadow:0 24px 60px rgba(10,18,34,.35);}
+  .set-title{font-size:19px; font-weight:700; color:var(--ink); text-align:center;}
+  .set-sub{font-size:12.5px; color:var(--sub); text-align:center; margin:6px 0 18px;}
+  .set-row{margin-bottom:16px;}
+  .set-label{font-size:13px; font-weight:600; color:var(--ink); margin-bottom:8px;}
+  .set-opts{display:flex; gap:8px; flex-wrap:wrap;}
+  .set-opt{flex:1 1 auto; min-width:88px; text-align:center; padding:9px 12px; border-radius:999px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font-size:13.5px; font-weight:600; cursor:pointer; transition:background .15s, border-color .15s, color .15s;}
+  .set-opt.sel{background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink);}
+  .set-time{width:100%; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font-size:16px; font-weight:600; -webkit-appearance:none; appearance:none;}
+  .set-done{width:100%; margin-top:6px;}
   .search input{flex:1; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:10px 18px; font-size:16px; color:var(--ink); outline:none;}
   .search input:focus{border-color:var(--accent);}
   .search .f-count{font-size:12px; color:var(--sub); align-self:center; white-space:nowrap;}
@@ -199,13 +210,34 @@
 <!-- ===== Level Picker ===== -->
 <div id="levelView" style="display:none;"></div>
 
+<!-- ===== 推送设置面板 ===== -->
+<div id="settingsView" style="display:none;">
+  <div class="set-panel">
+    <div class="set-title">推送设置</div>
+    <div class="set-sub">每天按所选时间推送对应难度和数量的单词</div>
+    <div class="set-row">
+      <div class="set-label">单词级别</div>
+      <div class="set-opts" id="setLevels"></div>
+    </div>
+    <div class="set-row">
+      <div class="set-label">每天数量</div>
+      <div class="set-opts" id="setCounts"></div>
+    </div>
+    <div class="set-row">
+      <div class="set-label">推送时间</div>
+      <input type="time" id="setTime" class="set-time" value="08:30">
+    </div>
+    <button class="btn set-done" id="setDone">完成</button>
+  </div>
+</div>
+
 <!-- ===== Main ===== -->
 <div id="mainView" style="display:none;">
 <header class="top">
   <div class="top-inner">
     <div>
       <h1>每日英语单词</h1>
-      <p>每天8:30推送10个实用词·<span id="dataSrc">内置词库</span>·<span id="notifyStatus">通知检测中…</span></p>
+      <p><span id="pushMeta">每天8:30推送10个实用词</span>·<span id="dataSrc">内置词库</span>·<span id="notifyStatus">通知检测中…</span></p>
     </div>
     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
       <span class="lv-badge" id="lvBadge">C1-C2</span>
@@ -282,6 +314,10 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     var dataSource = "内置词库";
     var KEY = "dailyWordsMastered_v1";
     var LKEY = "dailyWordsLevel_v1";
+    var SKEY_COUNT = "dailyWordsCount_v1";
+    var SKEY_TIME = "dailyWordsTime_v1";
+    function getSetting(k, def){ try{ var v = localStorage.getItem(k); return v === null ? def : v; }catch(e){ return def; } }
+    function setSetting(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
     var store = null;
     try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ store = {}; }
     function saveStore(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
@@ -340,11 +376,19 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     }
 
     // ===== Splash → Level Picker → Main =====
+    function updatePushMeta(){
+      var el = document.getElementById('pushMeta');
+      if(!el) return;
+      var tm = getSetting(SKEY_TIME, '08:30') || '08:30';
+      var cnt = getSetting(SKEY_COUNT, '10');
+      el.textContent = '每天' + tm + '推送' + cnt + '个实用词';
+    }
     function showMain(){
       document.getElementById('splash').classList.add('hide');
       document.getElementById('levelView').style.display = 'none';
       document.getElementById('mainView').style.display = '';
       document.getElementById('lvBadge').textContent = curLevel;
+      updatePushMeta();
       var ds = document.getElementById('dataSrc');
       if(ds) ds.textContent = dataSource;
       switchTab('today');
@@ -371,6 +415,61 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
           showMain();
         });
       });
+    }
+
+    // ===== 推送设置面板（级别 / 数量 / 时间）=====
+    function openSettings(){
+      var v = document.getElementById('settingsView');
+      if(!v) return;
+      var cur = curLevel || 'C1-C2';
+      var cnt = getSetting(SKEY_COUNT, '10');
+      var tm = getSetting(SKEY_TIME, '08:30');
+      var lvBox = document.getElementById('setLevels');
+      var cntBox = document.getElementById('setCounts');
+      var tmInput = document.getElementById('setTime');
+      if(lvBox){
+        lvBox.innerHTML = LEVELS.map(function(l){
+          return '<div class="set-opt' + (l.id === cur ? ' sel' : '') + '" data-v="' + l.id + '">' + l.t + '</div>';
+        }).join('');
+      }
+      if(cntBox){
+        cntBox.innerHTML = ['5','10','15'].map(function(n){
+          return '<div class="set-opt' + (n === cnt ? ' sel' : '') + '" data-v="' + n + '">每天 ' + n + ' 个</div>';
+        }).join('');
+      }
+      if(tmInput) tmInput.value = /^\d{1,2}:\d{2}$/.test(tm) ? tm : '08:30';
+      var curSel = { lv: cur, cnt: cnt };
+      if(lvBox) lvBox.querySelectorAll('.set-opt').forEach(function(o){
+        o.onclick = function(){
+          lvBox.querySelectorAll('.set-opt').forEach(function(x){ x.classList.remove('sel'); });
+          o.classList.add('sel');
+          curSel.lv = o.getAttribute('data-v');
+        };
+      });
+      if(cntBox) cntBox.querySelectorAll('.set-opt').forEach(function(o){
+        o.onclick = function(){
+          cntBox.querySelectorAll('.set-opt').forEach(function(x){ x.classList.remove('sel'); });
+          o.classList.add('sel');
+          curSel.cnt = o.getAttribute('data-v');
+        };
+      });
+      var done = document.getElementById('setDone');
+      if(done){
+        done.onclick = function(){
+          curLevel = curSel.lv;
+          try { localStorage.setItem(LKEY, curLevel); } catch(e){}
+          var bd = document.getElementById('lvBadge');
+          if(bd) bd.textContent = curLevel;
+          setSetting(SKEY_COUNT, curSel.cnt);
+          setSetting(SKEY_TIME, tmInput.value || '08:30');
+          v.style.display = 'none';
+          updatePushMeta();
+          renderToday();
+          scheduleDailyNotify();
+        };
+      }
+      v.style.display = 'flex';
+      v.onclick = function(e){ if(e.target === v){ v.style.display = 'none'; } };
     }
 
     // ===== 渲染工具 =====
@@ -446,16 +545,17 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
 
     // ===== 今日 =====
     var todayIdx = DATA.length - 1;
+    function dailyCount(){ var n = parseInt(getSetting(SKEY_COUNT, '10'), 10); return (isNaN(n) || n < 1) ? 10 : n; }
     function renderToday(){
       var wrap = document.getElementById('view-today');
       if(!DATA.length){ wrap.innerHTML = '<div class="empty">暂无数据</div>'; return; }
       var d = DATA[todayIdx];
-      var words = byLevel(d.words);
+      var words = byLevel(d.words).slice(0, dailyCount());
       if(!words.length){
-        wrap.innerHTML = '<div class="empty">今日推送的 5 个词里没有「' + esc(curLevel) + '」级别的词<br><br>' +
+        wrap.innerHTML = '<div class="empty">今日推送的词里没有「' + esc(curLevel) + '」级别的词<br><br>' +
           '<button class="btn" id="lvSwitch">切换单词水平</button></div>';
         var ls = document.getElementById('lvSwitch');
-        if(ls) ls.onclick = function(){ showLevelPicker(); };
+        if(ls) ls.onclick = function(){ openSettings(); };
         return;
       }
       var mastered = words.filter(function(w){ return isDone(w.w); }).length;
@@ -738,7 +838,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       if(!pool.length){
         area.innerHTML = '<div class="rev-empty">当前级别没有可复习的单词。<br><br><button class="btn primary" id="revGoPick">切换水平</button></div>';
         var rp = document.getElementById('revGoPick');
-        if(rp) rp.onclick = function(){ showLevelPicker(); };
+        if(rp) rp.onclick = function(){ openSettings(); };
         document.getElementById('revBar').textContent = '';
         return;
       }
@@ -817,7 +917,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     });
 
     // ===== 级别切换 =====
-    document.getElementById('lvBadge').addEventListener('click', showLevelPicker);
+    document.getElementById('lvBadge').addEventListener('click', openSettings);
 
     // ===== 发音（优先原生插件，回退 Web Speech）=====
     var _tts = (typeof Capacitor !== 'undefined' && Capacitor.Plugins && Capacitor.Plugins.TextToSpeech) ? Capacitor.Plugins.TextToSpeech : null;
@@ -856,32 +956,35 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       }
     });
 
-    // ===== 每日 8:30 本地通知 =====
+    // ===== 每日本地通知（时间 / 数量由推送设置决定）=====
     function setNotifyState(txt){ var el = document.getElementById('notifyStatus'); if(el) el.textContent = txt; }
+    function scheduleDailyNotify(){
+      var LN = window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.LocalNotifications;
+      if(!LN) return;
+      var t = (getSetting(SKEY_TIME, '08:30') || '08:30').split(':');
+      var h = parseInt(t[0], 10), m = parseInt(t[1], 10);
+      if(isNaN(h) || isNaN(m)){ h = 8; m = 30; }
+      var cnt = getSetting(SKEY_COUNT, '10');
+      var hm = ((h < 10 ? '0' : '') + h) + ':' + ((m < 10 ? '0' : '') + m);
+      LN.cancel({ notifications: [{ id: 101 }] }).then(function(){
+        return LN.schedule({ notifications: [{
+          id: 101,
+          title: '每日英语单词',
+          body: '今日 ' + cnt + ' 个新词已更新，点开学习',
+          schedule: { on: { hour: h, minute: m }, repeats: true }
+        }] });
+      }).then(function(){
+        setNotifyState('通知已开启 · 每天' + hm);
+      }).catch(function(){
+        setNotifyState('通知未开启（请在系统设置中允许）');
+      });
+    }
     try{
       var LN = window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.LocalNotifications;
       if(LN){
         LN.requestPermissions().then(function(perm){
-          if(perm && perm.display === 'granted'){
-            return LN.schedule({notifications:[{
-              id: 101,
-              title: '每日英语单词',
-              body: '今日 10 个新词已更新，点开学习',
-              schedule: { on: { hour: 8, minute: 30 }, repeats: true }
-            }]}).then(function(){
-              setNotifyState('通知已开启 · 每天8:30');
-              // ===== 测试通知：启动 5 秒后发一条，验证推送链路 =====
-              try{
-                LN.schedule({notifications:[{
-                  id: 102,
-                  title: '每日英语单词',
-                  body: '通知测试：你能收到这条，说明推送正常',
-                  schedule: { at: new Date(Date.now() + 5000) }
-                }]}).catch(function(){});
-              }catch(e){}
-            });
-          }
-          setNotifyState('通知未开启（请在系统设置中允许）');
+          if(perm && perm.display === 'granted'){ scheduleDailyNotify(); }
+          else { setNotifyState('通知未开启（请在系统设置中允许）'); }
         }).catch(function(){ setNotifyState('通知未开启'); });
       } else {
         setNotifyState('通知组件未就绪');
