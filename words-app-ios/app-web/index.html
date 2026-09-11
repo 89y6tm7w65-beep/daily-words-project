@@ -264,7 +264,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
   "use strict";
   try {
     var DATA = (typeof WORDS_DATA !== "undefined") ? WORDS_DATA : [];
-    var REMOTE_URL = "https://cdn.jsdelivr.net/gh/89y6tm7w65-beep/daily-words-data@main/words-data.json"; // 远程词库：App 每次启动自动联网更新
+    var REMOTE_URL = "https://cdn.jsdelivr.net/gh/89y6tm7w65-beep/daily-words-data@main/words-data.json?v=20260911"; // 远程词库：v 参数每次更新词库后递增，强制绕过 CDN 边缘缓存
     var dataSource = "内置词库";
     var KEY = "dailyWordsMastered_v1";
     var LKEY = "dailyWordsLevel_v1";
@@ -296,16 +296,8 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       if(!obj[0] || !obj[0].date || !Array.isArray(obj[0].words)) return null;
       return obj;
     }
-    function loadCached(){
-      try{
-        var s = localStorage.getItem("dwRemoteCache_v1");
-        if(s){ var d = normalizeData(JSON.parse(s)); if(d) return d; }
-      }catch(e){}
-      return null;
-    }
     function fetchRemote(done){
-      var cached = loadCached();
-      if(cached){ DATA = cached; dataSource = "词库（上次联网缓存）"; }
+      // 内置词库（编译时最新）始终作为基准，远程拉取成功才覆盖；失败/超时保持内置
       if(!REMOTE_URL){ if(done) done(); return; }
       var xhr = new XMLHttpRequest();
       xhr.open("GET", REMOTE_URL, true);
@@ -313,7 +305,9 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
       xhr.onload = function(){
         try{
           var d = normalizeData(JSON.parse(xhr.responseText));
-          if(d){
+          var curLast = DATA.length ? (DATA[DATA.length-1].date || '') : '';
+          var newLast = d && d.length ? (d[d.length-1].date || '') : '';
+          if(d && newLast >= curLast){
             DATA = d; dataSource = "词库（已自动更新）";
             try{ localStorage.setItem("dwRemoteCache_v1", JSON.stringify(d)); }catch(e){}
           }
