@@ -95,3 +95,16 @@
 - viable（B1-B2） //ˈvaɪəbl//
 - prudent（C1-C2） //ˈpruːdnt//
 - concur（C1-C2） //kənˈkɜː//
+
+## 9月12日（2026-09-12）
+
+- escalate（C1-C2） //ˈeskəleɪt//
+- disclose（C1-C2） //dɪsˈkləʊz//
+- imminent（C1-C2） //ˈɪmɪnənt//
+- turmoil（C1-C2） //ˈtɜːmɔɪl//
+- upheaval（C1-C2） //ʌpˈhiːvl//
+- inherent（C1-C2） //ɪnˈhɪərənt//
+- empirical（C1-C2） //ɪmˈpɪrɪkl//
+- plausible（C1-C2） //ˈplɔːzəbl//
+- allocate（C1-C2） //ˈæləkeɪt//
+- stakeholder（C1-C2） //ˈsteɪkhəʊldə(r)//

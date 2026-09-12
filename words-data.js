@@ -1009,240 +1009,476 @@ const WORDS_DATA = [
    }
   ]
  },
-{
- "date": "2026-09-11",
- "label": "9月11日",
- "words": [
-  {
-   "w": "sustain",
+ {
+  "date": "2026-09-11",
+  "label": "9月11日",
+  "words": [
+   {
+    "w": "sustain",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/səˈsteɪn/",
-   "pos": "v.",
-   "def": "维持；支撑；遭受（损失、伤害）",
-   "ex": [
-    [
-     "The economy cannot sustain this level of growth forever.",
-     "经济无法永远维持这种增长速度。"
+    "level": "C1-C2",
+    "ipa": "/səˈsteɪn/",
+    "pos": "v.",
+    "def": "维持；支撑；遭受（损失、伤害）",
+    "ex": [
+     [
+      "The economy cannot sustain this level of growth forever.",
+      "经济无法永远维持这种增长速度。"
+     ],
+     [
+      "Several buildings sustained severe damage in the earthquake.",
+      "几栋建筑在地震中遭受了严重损坏。"
+     ],
+     [
+      "We need more funding to sustain the project long-term.",
+      "我们需要更多资金来长期维持这个项目。"
+     ]
     ],
-    [
-     "Several buildings sustained severe damage in the earthquake.",
-     "几栋建筑在地震中遭受了严重损坏。"
-    ],
-    [
-     "We need more funding to sustain the project long-term.",
-     "我们需要更多资金来长期维持这个项目。"
-    ]
-   ],
-   "tip": "sus-（自下而上）+ tain（握持）→ 从下面托住，即维持。同根词 maintain、contain。"
-  },
-  {
-   "w": "incur",
+    "tip": "sus-（自下而上）+ tain（握持）→ 从下面托住，即维持。同根词 maintain、contain。"
+   },
+   {
+    "w": "incur",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/ɪnˈkɜː/",
-   "pos": "v.",
-   "def": "招致；蒙受（费用、债务、损失）",
-   "ex": [
-    [
-     "Any delay will incur additional costs.",
-     "任何延误都会产生额外费用。"
+    "level": "C1-C2",
+    "ipa": "/ɪnˈkɜː/",
+    "pos": "v.",
+    "def": "招致；蒙受（费用、债务、损失）",
+    "ex": [
+     [
+      "Any delay will incur additional costs.",
+      "任何延误都会产生额外费用。"
+     ],
+     [
+      "The company incurred heavy losses last quarter.",
+      "公司上季度蒙受了重大损失。"
+     ],
+     [
+      "He incurred a fine for parking in a restricted area.",
+      "他在禁停区停车而被罚款。"
+     ]
     ],
-    [
-     "The company incurred heavy losses last quarter.",
-     "公司上季度蒙受了重大损失。"
-    ],
-    [
-     "He incurred a fine for parking in a restricted area.",
-     "他在禁停区停车而被罚款。"
-    ]
-   ],
-   "tip": "in-（进入）+ cur（跑）→ 跑进麻烦里，即招致。cur 同根：occur（发生）、current（流动的）。"
-  },
-  {
-   "w": "consolidate",
+    "tip": "in-（进入）+ cur（跑）→ 跑进麻烦里，即招致。cur 同根：occur（发生）、current（流动的）。"
+   },
+   {
+    "w": "consolidate",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/kənˈsɒlɪdeɪt/",
-   "pos": "v.",
-   "def": "巩固；合并",
-   "ex": [
-    [
-     "The two firms consolidated to form a single company.",
-     "两家公司合并组成了一家公司。"
+    "level": "C1-C2",
+    "ipa": "/kənˈsɒlɪdeɪt/",
+    "pos": "v.",
+    "def": "巩固；合并",
+    "ex": [
+     [
+      "The two firms consolidated to form a single company.",
+      "两家公司合并组成了一家公司。"
+     ],
+     [
+      "She took time off to consolidate her position before the election.",
+      "选举前她休假来巩固自己的地位。"
+     ],
+     [
+      "The company consolidated its overseas operations.",
+      "公司合并了海外业务。"
+     ]
     ],
-    [
-     "She took time off to consolidate her position before the election.",
-     "选举前她休假来巩固自己的地位。"
-    ],
-    [
-     "The company consolidated its overseas operations.",
-     "公司合并了海外业务。"
-    ]
-   ],
-   "tip": "con-（一起）+ solid（坚固）+ -ate → 使一起变坚固，即巩固。solid 同根。"
-  },
-  {
-   "w": "prevalent",
+    "tip": "con-（一起）+ solid（坚固）+ -ate → 使一起变坚固，即巩固。solid 同根。"
+   },
+   {
+    "w": "prevalent",
     "lv": "B2",
-   "level": "C1-C2",
-   "ipa": "/ˈprevələnt/",
-   "pos": "adj.",
-   "def": "流行的；普遍的",
-   "ex": [
-    [
-     "This view is prevalent among young people.",
-     "这种观点在年轻人中很普遍。"
+    "level": "C1-C2",
+    "ipa": "/ˈprevələnt/",
+    "pos": "adj.",
+    "def": "流行的；普遍的",
+    "ex": [
+     [
+      "This view is prevalent among young people.",
+      "这种观点在年轻人中很普遍。"
+     ],
+     [
+      "Dengue fever is prevalent in tropical regions.",
+      "登革热在热带地区流行。"
+     ],
+     [
+      "Identity theft has become increasingly prevalent online.",
+      "网络身份盗窃变得越来越普遍。"
+     ]
     ],
-    [
-     "Dengue fever is prevalent in tropical regions.",
-     "登革热在热带地区流行。"
-    ],
-    [
-     "Identity theft has become increasingly prevalent online.",
-     "网络身份盗窃变得越来越普遍。"
-    ]
-   ],
-   "tip": "pre-（前面）+ val（力量）+ -ent → 力量压在前面、占主导，即普遍流行。val 同根：value、valid。"
-  },
-  {
-   "w": "discreet",
+    "tip": "pre-（前面）+ val（力量）+ -ent → 力量压在前面、占主导，即普遍流行。val 同根：value、valid。"
+   },
+   {
+    "w": "discreet",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/dɪˈskriːt/",
-   "pos": "adj.",
-   "def": "谨慎的；言行得体的；不显眼的",
-   "ex": [
-    [
-     "Please keep the matter discreet.",
-     "请对这件事谨慎保密。"
+    "level": "C1-C2",
+    "ipa": "/dɪˈskriːt/",
+    "pos": "adj.",
+    "def": "谨慎的；言行得体的；不显眼的",
+    "ex": [
+     [
+      "Please keep the matter discreet.",
+      "请对这件事谨慎保密。"
+     ],
+     [
+      "He made a discreet exit from the party.",
+      "他悄无声息地离开了聚会。"
+     ],
+     [
+      "The hotel offers discreet service for VIP guests.",
+      "这家酒店为贵宾提供贴心的低调服务。"
+     ]
     ],
-    [
-     "He made a discreet exit from the party.",
-     "他悄无声息地离开了聚会。"
-    ],
-    [
-     "The hotel offers discreet service for VIP guests.",
-     "这家酒店为贵宾提供贴心的低调服务。"
-    ]
-   ],
-   "tip": "dis-（分开）+ creet（分辨）→ 能分辨分寸，即谨慎。别和 discrete（离散的）混淆：discreet 指“嘴严”，discrete 指“分离”。"
-  },
-  {
-   "w": "intact",
+    "tip": "dis-（分开）+ creet（分辨）→ 能分辨分寸，即谨慎。别和 discrete（离散的）混淆：discreet 指“嘴严”，discrete 指“分离”。"
+   },
+   {
+    "w": "intact",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/ɪnˈtækt/",
-   "pos": "adj.",
-   "def": "完好无损的；完整的",
-   "ex": [
-    [
-     "The glass survived the fall intact.",
-     "玻璃杯摔下来却完好无损。"
+    "level": "C1-C2",
+    "ipa": "/ɪnˈtækt/",
+    "pos": "adj.",
+    "def": "完好无损的；完整的",
+    "ex": [
+     [
+      "The glass survived the fall intact.",
+      "玻璃杯摔下来却完好无损。"
+     ],
+     [
+      "Despite the fire, the building's structure remained intact.",
+      "尽管发生火灾，大楼结构依然完好。"
+     ],
+     [
+      "Her reputation remained intact after the scandal.",
+      "丑闻之后她的名誉依然无损。"
+     ]
     ],
-    [
-     "Despite the fire, the building's structure remained intact.",
-     "尽管发生火灾，大楼结构依然完好。"
-    ],
-    [
-     "Her reputation remained intact after the scandal.",
-     "丑闻之后她的名誉依然无损。"
-    ]
-   ],
-   "tip": "in-（不）+ tact（接触）→ 没有被碰过，即完好。tact 同根：contact（接触）、tactile（触觉的）。"
-  },
-  {
-   "w": "allegedly",
+    "tip": "in-（不）+ tact（接触）→ 没有被碰过，即完好。tact 同根：contact（接触）、tactile（触觉的）。"
+   },
+   {
+    "w": "allegedly",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/əˈledʒɪdli/",
-   "pos": "adv.",
-   "def": "据称；据说（新闻常用）",
-   "ex": [
-    [
-     "The company allegedly violated environmental regulations.",
-     "该公司据称违反了环保法规。"
+    "level": "C1-C2",
+    "ipa": "/əˈledʒɪdli/",
+    "pos": "adv.",
+    "def": "据称；据说（新闻常用）",
+    "ex": [
+     [
+      "The company allegedly violated environmental regulations.",
+      "该公司据称违反了环保法规。"
+     ],
+     [
+      "He allegedly stole classified documents.",
+      "他据称窃取了机密文件。"
+     ],
+     [
+      "The star was allegedly involved in a bribery scandal.",
+      "这位明星据称卷入了一起贿赂丑闻。"
+     ]
     ],
-    [
-     "He allegedly stole classified documents.",
-     "他据称窃取了机密文件。"
-    ],
-    [
-     "The star was allegedly involved in a bribery scandal.",
-     "这位明星据称卷入了一起贿赂丑闻。"
-    ]
-   ],
-   "tip": "allege（宣称）+ -ly；新闻高频词，用在未经证实的指控前。词根 leg-（法律）→ “在法律上宣称”。"
-  },
-  {
-   "w": "viable",
+    "tip": "allege（宣称）+ -ly；新闻高频词，用在未经证实的指控前。词根 leg-（法律）→ “在法律上宣称”。"
+   },
+   {
+    "w": "viable",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/ˈvaɪəbl/",
-   "pos": "adj.",
-   "def": "可行的；能存活的",
-   "ex": [
-    [
-     "Solar power is a viable alternative to fossil fuels.",
-     "太阳能是化石燃料的可行替代方案。"
+    "level": "C1-C2",
+    "ipa": "/ˈvaɪəbl/",
+    "pos": "adj.",
+    "def": "可行的；能存活的",
+    "ex": [
+     [
+      "Solar power is a viable alternative to fossil fuels.",
+      "太阳能是化石燃料的可行替代方案。"
+     ],
+     [
+      "The committee concluded that the plan was not economically viable.",
+      "委员会认定该计划在经济上不可行。"
+     ],
+     [
+      "The startup needs a viable business model to attract investors.",
+      "这家初创公司需要可行的商业模式来吸引投资者。"
+     ]
     ],
-    [
-     "The committee concluded that the plan was not economically viable.",
-     "委员会认定该计划在经济上不可行。"
-    ],
-    [
-     "The startup needs a viable business model to attract investors.",
-     "这家初创公司需要可行的商业模式来吸引投资者。"
-    ]
-   ],
-   "tip": "via（路）+ -able → 有路可走，即可行。同根：via（经由）、deviate（偏离）。"
-  },
-  {
-   "w": "prudent",
+    "tip": "via（路）+ -able → 有路可走，即可行。同根：via（经由）、deviate（偏离）。"
+   },
+   {
+    "w": "prudent",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/ˈpruːdnt/",
-   "pos": "adj.",
-   "def": "谨慎的；明智的",
-   "ex": [
-    [
-     "It would be prudent to save some money for emergencies.",
-     "存些钱以备不时之需是明智的。"
+    "level": "C1-C2",
+    "ipa": "/ˈpruːdnt/",
+    "pos": "adj.",
+    "def": "谨慎的；明智的",
+    "ex": [
+     [
+      "It would be prudent to save some money for emergencies.",
+      "存些钱以备不时之需是明智的。"
+     ],
+     [
+      "A prudent investor diversifies.",
+      "谨慎的投资者会分散投资。"
+     ],
+     [
+      "The government took prudent measures to control inflation.",
+      "政府采取审慎措施控制通胀。"
+     ]
     ],
-    [
-     "A prudent investor diversifies.",
-     "谨慎的投资者会分散投资。"
-    ],
-    [
-     "The government took prudent measures to control inflation.",
-     "政府采取审慎措施控制通胀。"
-    ]
-   ],
-   "tip": "prud = prov（预见）→ 有远见、想得长远，即谨慎明智。联想 provident（有远见的）。"
-  },
-  {
-   "w": "concur",
+    "tip": "prud = prov（预见）→ 有远见、想得长远，即谨慎明智。联想 provident（有远见的）。"
+   },
+   {
+    "w": "concur",
     "lv": "C1",
-   "level": "C1-C2",
-   "ipa": "/kənˈkɜː/",
-   "pos": "v.",
-   "def": "同意；同时发生",
-   "ex": [
-    [
-     "The committee concurred with the recommendation.",
-     "委员会同意这项建议。"
+    "level": "C1-C2",
+    "ipa": "/kənˈkɜː/",
+    "pos": "v.",
+    "def": "同意；同时发生",
+    "ex": [
+     [
+      "The committee concurred with the recommendation.",
+      "委员会同意这项建议。"
+     ],
+     [
+      "Experts concur that the policy is effective.",
+      "专家们一致认为这项政策有效。"
+     ],
+     [
+      "The two events concurred on the same day.",
+      "两件事碰巧在同一天发生。"
+     ]
     ],
-    [
-     "Experts concur that the policy is effective.",
-     "专家们一致认为这项政策有效。"
+    "tip": "con-（一起）+ cur（跑）→ 一起跑，即意见一致 / 同时发生。cur 同根：occur（发生）、current（当前的）。"
+   }
+  ]
+ },
+ {
+  "date": "2026-09-12",
+  "label": "9月12日",
+  "words": [
+   {
+    "w": "escalate",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈeskəleɪt/",
+    "pos": "v.",
+    "def": "（使）逐步升级；加剧；扩大",
+    "ex": [
+     [
+      "The conflict between the two countries threatens to escalate into a full-scale war.",
+      "两国之间的冲突有可能升级为全面战争。"
+     ],
+     [
+      "If the customer is still unhappy, please escalate the issue to your line manager.",
+      "如果客户仍然不满意，请把问题上报给你的直属经理。"
+     ],
+     [
+      "Prices escalated rapidly during the housing boom.",
+      "房地产繁荣期间房价迅速攀升。"
+     ]
     ],
-    [
-     "The two events concurred on the same day.",
-     "两件事碰巧在同一天发生。"
-    ]
-   ],
-   "tip": "con-（一起）+ cur（跑）→ 一起跑，即意见一致 / 同时发生。cur 同根：occur（发生）、current（当前的）。"
-  }
- ]
-}
+    "tip": "词根 e(s)-（出）+ scala（阶梯，同源 escalator 扶梯）→ 沿着阶梯逐级往上走，事情一步步变严重。"
+   },
+   {
+    "w": "disclose",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/dɪsˈkləʊz/",
+    "pos": "v.",
+    "def": "披露；透露；公开",
+    "ex": [
+     [
+      "The company is required by law to disclose its financial records to shareholders.",
+      "法律要求公司向股东披露财务记录。"
+     ],
+     [
+      "He refused to disclose the source of his information.",
+      "他拒绝透露消息来源。"
+     ],
+     [
+      "The report discloses a series of safety violations at the plant.",
+      "报告披露了该工厂一系列安全隐患。"
+     ]
+    ],
+    "tip": "dis-（打开）+ close（关闭）→ 把关闭的东西打开，即公开、披露。与 enclose（封闭）反义。"
+   },
+   {
+    "w": "imminent",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈɪmɪnənt/",
+    "pos": "adj.",
+    "def": "即将发生的；迫在眉睫的",
+    "ex": [
+     [
+      "Residents were warned that flooding was imminent and to move to higher ground.",
+      "居民被警告洪水即将来临，需转移到高处。"
+     ],
+     [
+      "The company announced the imminent launch of its new product line.",
+      "公司宣布新产品线即将发布。"
+     ],
+     [
+      "Talks broke down amid fears that a strike was imminent.",
+      "谈判破裂，人们担心罢工迫在眉睫。"
+     ]
+    ],
+    "tip": "im-（进入）+ min（突出、悬垂）→ 危险悬在头顶，即迫在眉睫。与 eminent（杰出的）区分：e- 出来 → 出类拔萃。"
+   },
+   {
+    "w": "turmoil",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈtɜːmɔɪl/",
+    "pos": "n.",
+    "def": "动荡；混乱；骚乱",
+    "ex": [
+     [
+      "The country has been in political turmoil since the disputed election.",
+      "自选举争议以来，该国一直处于政治动荡之中。"
+     ],
+     [
+      "His mind was in turmoil after receiving the unexpected news.",
+      "收到这个意外消息后，他内心一片混乱。"
+     ],
+     [
+      "Markets plunged amid global economic turmoil.",
+      "全球经济动荡中市场暴跌。"
+     ]
+    ],
+    "tip": "tur-（转动）+ moil（搅拌）→ 像搅拌机一样翻搅，即混乱。画面感：洗衣机滚筒里翻滚的衣服——乱成一团。"
+   },
+   {
+    "w": "upheaval",
+    "lv": "C2",
+    "level": "C1-C2",
+    "ipa": "/ʌpˈhiːvl/",
+    "pos": "n.",
+    "def": "剧变；动荡；激变",
+    "ex": [
+     [
+      "The country is going through a period of social upheaval.",
+      "这个国家正经历一段社会剧变时期。"
+     ],
+     [
+      "Moving abroad caused a major upheaval in their family life.",
+      "移居国外给他们的家庭生活带来了巨大动荡。"
+     ],
+     [
+      "The industry has seen tremendous upheaval with the rise of AI.",
+      "随着人工智能崛起，该行业经历了巨大的变革。"
+     ]
+    ],
+    "tip": "up-（向上）+ heave（举起）→ 从底下被猛地掀翻，即剧变。画面：地壳被掀翻隆起，一切秩序都被打乱。"
+   },
+   {
+    "w": "inherent",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ɪnˈhɪərənt/",
+    "pos": "adj.",
+    "def": "固有的；内在的；与生俱来的",
+    "ex": [
+     [
+      "There are inherent risks in any investment.",
+      "任何投资都有固有的风险。"
+     ],
+     [
+      "The design has inherent flaws that cannot be easily fixed.",
+      "这个设计存在难以修复的固有缺陷。"
+     ],
+     [
+      "She has an inherent ability to stay calm under pressure.",
+      "她天生具备压力下保持冷静的能力。"
+     ]
+    ],
+    "tip": "in-（在内）+ her（粘住，同根 adhere 粘附）→ 粘在里面的、长在骨子里的，即固有的。"
+   },
+   {
+    "w": "empirical",
+    "lv": "C2",
+    "level": "C1-C2",
+    "ipa": "/ɪmˈpɪrɪkl/",
+    "pos": "adj.",
+    "def": "实证的；以观察或实验为依据的",
+    "ex": [
+     [
+      "The theory is supported by empirical evidence from dozens of studies.",
+      "该理论得到数十项研究实证证据的支持。"
+     ],
+     [
+      "Researchers need empirical data before drawing any conclusions.",
+      "研究人员在下结论前需要实证数据。"
+     ],
+     [
+      "There is little empirical research on this topic.",
+      "关于这个话题的实证研究很少。"
+     ]
+    ],
+    "tip": "来自希腊语 empeiria（经验）→ 靠亲身经验与实验说话，即实证的。联想 experience（经验）同源。"
+   },
+   {
+    "w": "plausible",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈplɔːzəbl/",
+    "pos": "adj.",
+    "def": "貌似合理的；可信的",
+    "ex": [
+     [
+      "His explanation sounds plausible, but I still have doubts.",
+      "他的解释听起来有道理，但我仍有疑虑。"
+     ],
+     [
+      "The police found a plausible motive for the crime.",
+      "警方找到了一个貌似合理的犯罪动机。"
+     ],
+     [
+      "We need a plausible strategy, not just wishful thinking.",
+      "我们需要一个行得通的策略，而不是一厢情愿。"
+     ]
+    ],
+    "tip": "plaus（鼓掌，同根 applaud 喝彩）→ 讲得让人想鼓掌，看似可信。注意：常暗含“只是貌似有理”，要留个心眼。"
+   },
+   {
+    "w": "allocate",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈæləkeɪt/",
+    "pos": "v.",
+    "def": "分配；划拨（资源、时间、资金）",
+    "ex": [
+     [
+      "The government will allocate additional funds to public healthcare.",
+      "政府将向公共医疗划拨额外资金。"
+     ],
+     [
+      "Managers must allocate their time wisely across multiple projects.",
+      "经理们必须在多个项目间明智地分配时间。"
+     ],
+     [
+      "Each team was allocated a specific budget for the quarter.",
+      "每个团队都分到了本季度的专项预算。"
+     ]
+    ],
+    "tip": "al-（向）+ loc（地方，同根 local 本地的）→ 把东西放到各自的位置，即分配。"
+   },
+   {
+    "w": "stakeholder",
+    "lv": "C1",
+    "level": "C1-C2",
+    "ipa": "/ˈsteɪkhəʊldə(r)/",
+    "pos": "n.",
+    "def": "利益相关者；股东",
+    "ex": [
+     [
+      "We need to consult all stakeholders before making the final decision.",
+      "在做最终决定前，我们需要咨询所有利益相关者。"
+     ],
+     [
+      "Employees, customers and investors are all key stakeholders of the company.",
+      "员工、客户和投资者都是公司的关键利益相关者。"
+     ],
+     [
+      "The project failed because key stakeholders were not on board.",
+      "项目失败是因为关键利益相关者没有参与进来。"
+     ]
+    ],
+    "tip": "stake（股份、赌注）+ holder（持有者）→ 手里握着利益的人。画面：牌桌上握着筹码的人，输赢都跟他有关。"
+   }
+  ]
+ }
 ];
